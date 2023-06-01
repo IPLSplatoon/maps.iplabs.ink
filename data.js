@@ -41,6 +41,6 @@ const splat3Maps = [
     "Brinewater Springs",
     "Manta Maria",
     "Um'ami Ruins",
-    "Baracle & Dime",
-    "Humpback Pump Track"
+    "Humpback Pump Track",
+    "Barnacle & Dime"
 ];

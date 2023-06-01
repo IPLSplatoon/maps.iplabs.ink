@@ -16,6 +16,7 @@
     --is-mobile: 0;
 }
 
+
 ::-webkit-scrollbar{
     width: .55em;
 }

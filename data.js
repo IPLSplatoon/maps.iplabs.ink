@@ -42,5 +42,7 @@ const splat3Maps = [
     "Manta Maria",
     "Um'ami Ruins",
     "Humpback Pump Track",
-    "Barnacle & Dime"
+    "Barnacle & Dime",
+    "Crableg Capital",
+    "Shipshape Cargo Co."
 ];

@@ -44,5 +44,7 @@ const splat3Maps = [
     "Humpback Pump Track",
     "Barnacle & Dime",
     "Crableg Capital",
-    "Shipshape Cargo Co."
+    "Shipshape Cargo Co.",
+    "Bluefin Depot",
+    "Robo ROM-en"
 ];

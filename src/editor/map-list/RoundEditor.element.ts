@@ -11,7 +11,6 @@ import { inputStyles } from "../../styles/Input.styles";
 
 @customElement('round-editor')
 export class RoundEditor extends LitElement {
-    //TODO: Potentially split edit mode into its own component
 
     @property()
     appContext?: AppContext;
@@ -37,6 +36,10 @@ export class RoundEditor extends LitElement {
                 --container-color: rgba(248, 216, 227, 0.15);
                 --color: var(--pink);
                 color: var(--color);
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                width: 100%;
             }
 
             button {
@@ -47,10 +50,24 @@ export class RoundEditor extends LitElement {
                 gap: calc(var(--gap) / 2)
             }
 
+            .button-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-left: var(--padding);
+                height: 100%;
+            }
+
+            .button-container button {
+                padding: 0 .25em;
+                border: none;
+                font-size: 1.2em;
+                height: .25em;
+            }
+
             .editor-container {
-                --padding-gap: calc(var(--padding) / 2);
-                padding: .75em calc(var(--padding) - var(--padding-gap));
-                margin: .75em var(--padding-gap);
+                padding: .75em calc(var(--padding) / 2);
+                margin: .75em calc(var(--padding) / 2);
                 display: flex;
                 flex-direction: row;
                 align-items: flex-end;
@@ -58,7 +75,7 @@ export class RoundEditor extends LitElement {
                 gap: var(--gap);
                 border-radius: 15px;
                 background: rgba(248, 216, 227, 0.10);
-                border-bottom: .075em solid var(--container-color);
+                width: 100%;
             }
 
             .editor-container > div {
@@ -103,6 +120,9 @@ export class RoundEditor extends LitElement {
     render(): TemplateResult {
         this.round = this.appContext?.rounds[this.roundIndex] ?? this.round;
         return html`
+            <div class="button-container">
+                ${this.getMoveButtons()}
+            </div>
             <div class="editor-container" @keydown=${this.handleEditorKeyDown}>
                 <div>
                     <div class="label">Name</div>
@@ -218,5 +238,38 @@ export class RoundEditor extends LitElement {
         } else if (e.key === "Escape") {
             this.handleEditCancel();
         }
+    }
+
+    private getMoveButtons() : TemplateResult {
+        if (this.roundIndex === 0) {
+            return html`
+                <button @click=${this.handleMoveDownClick}>↓</button>
+            `;
+        }
+        if (this.appContext && this.roundIndex === this.appContext?.rounds.length - 1) {
+            return html`
+                <button @click=${this.handleMoveUpClick}>↑</button>
+            `;
+        }
+        return html`
+            <button @click=${this.handleMoveUpClick}>↑</button>
+            <button @click=${this.handleMoveDownClick}>↓</button>
+        `;
+    }
+    
+    private handleMoveUpClick(): void {
+        const event = new CustomEvent("round-edit-move-up", {
+            composed: true,
+            detail: this.roundIndex
+        });
+        this.dispatchEvent(event);
+    }
+
+    private handleMoveDownClick(): void {
+        const event = new CustomEvent("round-edit-move-down", {
+            composed: true,
+            detail: this.roundIndex
+        });
+        this.dispatchEvent(event);
     }
 }

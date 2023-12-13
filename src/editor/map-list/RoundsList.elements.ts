@@ -45,6 +45,12 @@ export class RoundsList extends LitElement {
         this.addEventListener("round-edit-exit", () => {
             this.editModeIndex = -1;
         });
+        this.addEventListener("round-edit-move-down", () => {
+            this.moveRoundDown(this.editModeIndex);
+        });
+        this.addEventListener("round-edit-move-up", () => {
+            this.moveRoundUp(this.editModeIndex);
+        });
     }
 
     render(): TemplateResult {
@@ -99,5 +105,35 @@ export class RoundsList extends LitElement {
         if (roundsClone?.length){
             this.editModeIndex = roundsClone.length - 1;
         }
+    }
+
+    private moveRoundDown(roundIndex: number): void {
+        const roundsClone = _.cloneDeep(this.appContext?.rounds);
+        const round = roundsClone?.[roundIndex];
+        if (round){
+            roundsClone?.splice(roundIndex, 1);
+            roundsClone?.splice(roundIndex + 1, 0, round);
+        }
+        this.editModeIndex++;
+        const event = new CustomEvent("rounds-update", {
+            composed: true,
+            detail: roundsClone
+        });
+        this.dispatchEvent(event); 
+    }
+
+    private moveRoundUp(roundIndex: number): void {
+        const roundsClone = _.cloneDeep(this.appContext?.rounds);
+        const round = roundsClone?.[roundIndex];
+        if (round){
+            roundsClone?.splice(roundIndex, 1);
+            roundsClone?.splice(roundIndex - 1, 0, round);
+        }
+        this.editModeIndex--;
+        const event = new CustomEvent("rounds-update", {
+            composed: true,
+            detail: roundsClone
+        });
+        this.dispatchEvent(event); 
     }
 }

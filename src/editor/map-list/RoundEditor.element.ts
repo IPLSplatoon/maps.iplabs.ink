@@ -120,9 +120,7 @@ export class RoundEditor extends LitElement {
     render(): TemplateResult {
         this.round = this.appContext?.rounds[this.roundIndex] ?? this.round;
         return html`
-            <div class="button-container">
-                ${this.getMoveButtons()}
-            </div>
+            ${this.getMoveButtons()}
             <div class="editor-container" @keydown=${this.handleEditorKeyDown}>
                 <div>
                     <div class="label">Name</div>
@@ -241,19 +239,28 @@ export class RoundEditor extends LitElement {
     }
 
     private getMoveButtons() : TemplateResult {
+        if (this.roundIndex === 0 && this.appContext?.rounds.length === 1) {
+            return html``;
+        }
         if (this.roundIndex === 0) {
             return html`
-                <button @click=${this.handleMoveDownClick}>↓</button>
+                <div class="button-container">
+                    <button @click=${this.handleMoveDownClick}>↓</button>
+                </div>
             `;
         }
         if (this.appContext && this.roundIndex === this.appContext?.rounds.length - 1) {
             return html`
-                <button @click=${this.handleMoveUpClick}>↑</button>
+                <div class="button-container">
+                    <button @click=${this.handleMoveUpClick}>↑</button>
+                </div>
             `;
         }
         return html`
-            <button @click=${this.handleMoveUpClick}>↑</button>
-            <button @click=${this.handleMoveDownClick}>↓</button>
+            <div class="button-container">
+                <button @click=${this.handleMoveUpClick}>↑</button>
+                <button @click=${this.handleMoveDownClick}>↓</button>
+            </div>
         `;
     }
     

@@ -109,6 +109,12 @@ export class MapPoolWrapper extends LitElement {
                 color: var(--color);
                 opacity: .5;
             }
+
+            .top-bar {
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+            }
         `
     ];
 
@@ -121,7 +127,9 @@ export class MapPoolWrapper extends LitElement {
                         <div class="title">Editing ${modeAbbreviationToWords(this.targetMode ?? "tw")} Map Pool</div>
                     </div>
                     <div class="modal-contain container bg">
-                        <div class="wrapper">
+                        <div class="wrapper top-bar">
+                            <button @click=${this.handleSelectAll}>Select All</button>
+                            <button @click=${this.handleDeselectAll}>Deselect All</button>
                             <input class="search" type="text" placeholder="Search for a map..." @change=${this.handleSearchChange}>
                         </div>
                         <div class="checkboxes wrapper">
@@ -203,5 +211,25 @@ export class MapPoolWrapper extends LitElement {
 
     private handleSearchChange(e: Event) {
         this.searchQuery = (e.target as HTMLInputElement).value;
+    }
+
+    private handleSelectAll() {
+        const checkboxes = this.shadowRoot?.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) return;
+            checkbox.checked = true;
+            checkbox.parentElement?.classList.add('selected');
+        });
+        this.selectedMaps = [...maps];
+    }
+
+    private handleDeselectAll() {
+        const checkboxes = this.shadowRoot?.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+        checkboxes.forEach(checkbox => {
+            if (!checkbox.checked) return;
+            checkbox.checked = false;
+            checkbox.parentElement?.classList.remove('selected');
+        });
+        this.selectedMaps = [];
     }
 }

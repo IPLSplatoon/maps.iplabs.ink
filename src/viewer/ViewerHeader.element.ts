@@ -89,6 +89,6 @@ export class ViewerHeader extends LitElement {
 
     private handleEnterEditorClick(): void {
         const params = new URLSearchParams(window.location.search);
-        window.location.replace(window.location.host + "?" + params.toString());
+        window.location.replace("/?" + params.toString());
     }
 }

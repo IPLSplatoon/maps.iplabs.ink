@@ -3,10 +3,11 @@ import { customElement, property } from "lit/decorators.js";
 import { variableStyles } from "../../styles/Variable.styles";
 import { containerStyles } from "../../styles/Container.styles";
 import { buttonStyles } from "../../styles/Button.styles";
-import { AppContext } from "../../types-interfaces/Interfaces";
+import { AppContext, Game } from "../../types-interfaces/Interfaces";
 import "./Round.element.ts"
 import "./RoundEditor.element.ts"
 import _ from "lodash";
+import { Counterpick } from "../../types-interfaces/Types.ts";
 
 @customElement('rounds-list')
 export class RoundsList extends LitElement {
@@ -89,12 +90,18 @@ export class RoundsList extends LitElement {
             });
         }
 
+        const lastRoundPlayStyle = roundsClone?.[roundsClone?.length - 1]?.playStyle ?? "bestOf";
+
+        const lastRoundGameCount = roundsClone?.[roundsClone?.length - 1]?.games?.length ?? 3;
+        let games: (Game | Counterpick)[] = [];
+        for (let i = 0; i < lastRoundGameCount; i++){
+            games.push("counterpick");
+        }
+
         roundsClone?.push({
             name: roundName,
-            playStyle: "bestOf",
-            games: [
-                "counterpick", "counterpick", "counterpick"
-            ]
+            playStyle: lastRoundPlayStyle,
+            games: games
         });
         const event = new CustomEvent("rounds-update", {
             composed: true,

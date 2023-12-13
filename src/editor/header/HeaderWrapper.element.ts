@@ -7,6 +7,7 @@ import { containerStyles } from "../../styles/Container.styles";
 import { buttonStyles } from "../../styles/Button.styles";
 import { gsap } from "gsap";
 import "./AboutModal.element.ts";
+import { isJsonAppContext } from "../../helpers/AppContext.ts";
 
 @customElement('header-wrapper')
 export class HeaderWrapper extends LitElement {
@@ -83,6 +84,8 @@ export class HeaderWrapper extends LitElement {
         <div @wheel=${this.handleWheelScroll} class="container bg horizontal overflow" id="scrollTarget">
             <div @wheel=${this.handleWheelScroll} class="logo-text">maps.iplabs.ink <span class="logo-subtext">Editor</span></div>
             <div class="container horizontal button-container">
+                <button @click=${this.handleSaveClick}>Save</button>
+                <button @click=${this.handleLoadClick}>Load</button>
                 <button @click=${this.handleAboutClick}>About</button>
             </div>  
         </div>
@@ -98,6 +101,44 @@ export class HeaderWrapper extends LitElement {
             ease: "power2.inOut",
             duration: 0.05
         })
+    }
+
+    private handleSaveClick(): void {
+        var a = document.createElement("a");
+        if (!this.appContext) return;
+        var file = new Blob([JSON.stringify(this.appContext)], {type: 'text/plain'});
+        a.href = URL.createObjectURL(file);
+        a.download = "mapsiplabsink.json";
+        a.click();
+    }
+
+    private handleLoadClick(): void {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".json";
+        input.addEventListener("change", (e: Event) => {
+            const file = (e.target as HTMLInputElement).files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const result = e.target?.result;
+                if (!result) return;
+                const appContext = JSON.parse(result as string) as AppContext;
+
+                if (!isJsonAppContext(appContext)) {
+                    alert("File was not a valid maps.iplabs.ink editor file.");
+                    return;
+                }
+
+                const appContextEvent = new CustomEvent("app-context-update", {
+                    composed: true,
+                    detail: appContext
+                });
+                this.dispatchEvent(appContextEvent);
+            }
+            reader.readAsText(file);
+        });
+        input.click();
     }
 
     private handleAboutClick(): void {

@@ -3,7 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 import { variableStyles } from "../styles/Variable.styles.ts";
 import * as _ from "lodash";
 import "./header/HeaderWrapper.element.ts";
-import { decodeAppContext, encodeAppContext } from "../helpers/AppContextEncoding.ts";
+import { decodeAppContext, encodeAppContext } from "../helpers/AppContext.ts";
 import "./map-pool/MapPoolWrapper.element.ts";
 import "./map-list/MapListWrapper.element.ts";
 import { AppContext, MapPool, Round } from "../types-interfaces/Interfaces";
@@ -105,6 +105,12 @@ export class AppRoot extends LitElement {
         this.addEventListener("rounds-update", (e: Event) => {
             console.log("rounds-update event fired", (e as any).detail);
             this.updateRounds((e as any).detail as Round[]);
+        });
+
+        this.addEventListener("app-context-update", (e: Event) => {
+            console.log("app-context-update event fired", (e as any).detail);
+            this.appContext = (e as any).detail as AppContext;
+            this.updateWindowState();
         });
     }
 

@@ -51,3 +51,7 @@ export function decodeAppContext(encodedContext: string): AppContext {
 
     return appContext;
 }
+
+export function isJsonAppContext(obj: AppContext): obj is AppContext {
+    return obj.mapPool !== undefined && obj.rounds !== undefined;
+}

@@ -4,5 +4,7 @@
 Project uses [Lit](https://lit.dev/), [Typescript](https://www.typescriptlang.org/), and [Vite](https://vitejs.dev/)
 
 Install dependencies: `npm i`
+
 Enter dev mode: `npm run dev`
+
 Build for production: `npm run build`

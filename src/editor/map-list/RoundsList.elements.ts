@@ -12,7 +12,7 @@ export class RoundsList extends LitElement {
     @property()
     appContext?: AppContext;
     @property()
-    editModeIndexes: number[] = [];
+    editModeIndex: number = -1;
     
     static styles: CSSResult[] = [
         variableStyles,
@@ -39,10 +39,10 @@ export class RoundsList extends LitElement {
         super();
 
         this.addEventListener("round-edit-enter", (e: Event) => {
-            this.pushEditModeIndex((e as any).detail as number);
+            this.editModeIndex = (e as any).detail as number;
         });
         this.addEventListener("round-edit-exit", (e: Event) => {
-            this.removeEditModeIndex((e as any).detail as number);
+            this.editModeIndex = -1;
         });
     }
 
@@ -51,7 +51,7 @@ export class RoundsList extends LitElement {
 
         for (let i = 0; i < (this.appContext?.rounds.length ?? 0); i++){
             if (this.appContext?.rounds[i]){
-                const isEditMode = this.editModeIndexes.indexOf(i) > -1;
+                const isEditMode = this.editModeIndex === i;
                 roundTemplates.push(html`
                     <round-element .appContext=${this.appContext} .roundIndex=${i} .isEditMode=${isEditMode}></round-element>
                 `);
@@ -66,8 +66,18 @@ export class RoundsList extends LitElement {
 
     private handleAddRoundClick(): void {
         const roundsClone = _.cloneDeep(this.appContext?.rounds);
+
+        let roundName = "New Round";
+        const lastRoundName = roundsClone?.[roundsClone?.length - 1]?.name ?? "Round 0";
+        //if last round name ends with a number
+        if (lastRoundName?.match(/\d+$/)){
+            roundName = lastRoundName.replace(/\d+$/, (match) => {
+                return (parseInt(match) + 1).toString();
+            });
+        }
+
         roundsClone?.push({
-            name: "New Round",
+            name: roundName,
             playStyle: "bestOf",
             games: [
                 "counterpick", "counterpick", "counterpick"
@@ -80,20 +90,7 @@ export class RoundsList extends LitElement {
         this.dispatchEvent(event); 
 
         if (roundsClone?.length){
-            this.pushEditModeIndex(roundsClone?.length - 1);
+            this.editModeIndex = roundsClone.length - 1;
         }
-    }
-
-    private pushEditModeIndex(index: number): void {
-        this.editModeIndexes = [...this.editModeIndexes, index];
-    }
-
-    private removeEditModeIndex(index: number): void {
-        for (let i = 0; i < this.editModeIndexes.length; i++){
-            if (this.editModeIndexes[i] === index){
-                this.editModeIndexes.splice(i, 1);
-            }
-        }
-        this.requestUpdate();
     }
 }

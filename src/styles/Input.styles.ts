@@ -4,7 +4,6 @@ export const inputStyles: CSSResult = css`
     input {
         font-size: var(--font-size);
         font-family: var(--mono);
-        text-transform: Capitalize;
         text-align: left;
         background: none;
         color: var(--color);

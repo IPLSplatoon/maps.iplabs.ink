@@ -1,5 +1,5 @@
 import { CSSResult, LitElement, html, css, TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { variableStyles } from "../../styles/Variable.styles";
 import { containerStyles } from "../../styles/Container.styles";
 import { buttonStyles } from "../../styles/Button.styles";
@@ -18,6 +18,8 @@ export class RoundElement extends LitElement {
     roundIndex: number = 0;
     @property()
     isEditMode: boolean = false;
+    @state()
+    errorMessage: string = "";
     
     private round: Round = {
         name: "",
@@ -73,32 +75,38 @@ export class RoundElement extends LitElement {
             }
 
             .editor-container {
+                --padding-gap: calc(var(--padding) / 2);
+                padding: .75em calc(var(--padding) - var(--padding-gap));
+                margin: .75em var(--padding-gap);
                 display: flex;
                 flex-direction: row;
                 align-items: flex-end;
                 flex-wrap: wrap;
                 gap: var(--gap);
+                border-radius: 15px;
+                background: rgba(248, 216, 227, 0.10);
             }
 
             .editor-container > div {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: calc(var(--gap) / 4);
+                gap: calc(var(--gap) / 2);
             }
 
             .editor-container > div > input, .editor-container > div > select {
                 padding: .25em;
                 border: .075em solid var(--color);
-                border-radius: .5em;
+                border-radius: 15px;
             }
             
             .label {
                 font-size: .8em;
+                line-height: 1em;
             }
 
             input[type="text"] {
-                width: 9em;
+                width: 10em;
             }
 
             input[type="number"] {
@@ -109,6 +117,11 @@ export class RoundElement extends LitElement {
             input[type=number]::-webkit-inner-spin-button, 
             input[type=number]::-webkit-outer-spin-button {
                 opacity: 1;
+            }
+
+            .error {
+                font-style: italic;
+                font-size: .7em;
             }
         `
     ];
@@ -124,7 +137,7 @@ export class RoundElement extends LitElement {
         let template: TemplateResult;
         if (this.isEditMode) {
             template = html`
-                <div class="editor-container">
+                <div class="editor-container" @keydown=${this.handleEditorKeyDown}>
                     <div>
                         <div class="label">Name</div>
                         <input id="name" type="text" value=${this.round.name}>    
@@ -143,25 +156,36 @@ export class RoundElement extends LitElement {
                     <div style="flex-direction: row;">
                         <button @click=${this.handleEditSave}>Save</button>
                         <button @click=${this.handleEditCancel}>Cancel</button>
+                        <button @click=${this.handleDeleteClick}>Delete</button>
                     </div>
                 </div>
+                ${this.getError()}
             `;
         } else {
             template = html`
-                <div class="top-row">
-                    <div class="bold">${this.round.name}</div>
-                    <div class="label">${getPlayStyleString(this.round.playStyle, this.round.games.length)}</div>
-                    <button @click=${this.handleEditClick}>Edit</button>
+                <div class="wrapper">
+                    <div class="top-row">
+                        <div class="bold">${this.round.name}</div>
+                        <div class="label">${getPlayStyleString(this.round.playStyle, this.round.games.length)}</div>
+                        <button @click=${this.handleEditClick}>Edit</button>
+                    </div>
+                    ${gameTemplates}
                 </div>
-                ${gameTemplates}
             `;
         }
 
         return html`
-            <div class="wrapper">
-                ${template}
-            </div>
+            ${template}
         `;
+    }
+
+    firstUpdated() {
+        if (this.isEditMode){
+            const nameInput = this.shadowRoot?.querySelector("#name") as HTMLInputElement;
+            if (nameInput) {
+                nameInput.select();
+            }
+        }
     }
 
     private getGameTemplate(game: Game | Counterpick, index: number): TemplateResult {
@@ -270,6 +294,18 @@ export class RoundElement extends LitElement {
         });
         this.dispatchEvent(event);
     }
+    
+    private handleDeleteClick(): void {
+        const roundsClone: Round[] = _.cloneDeep(this.appContext?.rounds) ?? [];
+        if (!roundsClone) return;
+        roundsClone.splice(this.roundIndex, 1);
+
+        const roundsUpdate = new CustomEvent("rounds-update", {
+            composed: true,
+            detail: roundsClone
+        });
+        this.dispatchEvent(roundsUpdate);
+    }
 
     //v v v edit mode functions v v v
 
@@ -278,6 +314,16 @@ export class RoundElement extends LitElement {
         const name = (wrapper.querySelector("#name") as HTMLInputElement).value;
         const games = parseInt((wrapper.querySelector("#games") as HTMLInputElement).value);
         const playStyle = (wrapper.querySelector("#playStyle") as HTMLSelectElement).value;
+
+        if (!name || name.length === 0) {
+            this.errorMessage = "Name cannot be empty";
+            return;
+        }
+
+        if (!games || games < 1) {
+            this.errorMessage = "Must have at least one game";
+            return;
+        }
 
         const roundsClone: Round[] = _.cloneDeep(this.appContext?.rounds) ?? [];
         if (!roundsClone) return;
@@ -301,6 +347,7 @@ export class RoundElement extends LitElement {
     }
 
     private editExit(): void {
+        this.errorMessage = "";
         const event = new CustomEvent("round-edit-exit", {
             composed: true,
             detail: this.roundIndex
@@ -313,5 +360,20 @@ export class RoundElement extends LitElement {
             games.push("counterpick");
         }
         return games;
+    }
+
+    private getError(): TemplateResult {
+        if (this.errorMessage) {
+            return html`<div class="error">${this.errorMessage}</div>`;
+        }
+        return html``;
+    }
+
+    private handleEditorKeyDown(e: KeyboardEvent): void {
+        if (e.key === "Enter") {
+            this.handleEditSave(e);
+        } else if (e.key === "Escape") {
+            this.handleEditCancel();
+        }
     }
 }

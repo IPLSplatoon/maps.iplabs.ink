@@ -5,6 +5,7 @@ import { containerStyles } from "../../styles/Container.styles";
 import { buttonStyles } from "../../styles/Button.styles";
 import { AppContext } from "../../types-interfaces/Interfaces";
 import "./Round.element.ts"
+import "./RoundEditor.element.ts"
 import _ from "lodash";
 
 @customElement('rounds-list')
@@ -41,7 +42,7 @@ export class RoundsList extends LitElement {
         this.addEventListener("round-edit-enter", (e: Event) => {
             this.editModeIndex = (e as any).detail as number;
         });
-        this.addEventListener("round-edit-exit", (e: Event) => {
+        this.addEventListener("round-edit-exit", () => {
             this.editModeIndex = -1;
         });
     }
@@ -52,9 +53,15 @@ export class RoundsList extends LitElement {
         for (let i = 0; i < (this.appContext?.rounds.length ?? 0); i++){
             if (this.appContext?.rounds[i]){
                 const isEditMode = this.editModeIndex === i;
-                roundTemplates.push(html`
-                    <round-element .appContext=${this.appContext} .roundIndex=${i} .isEditMode=${isEditMode}></round-element>
-                `);
+                if (isEditMode){
+                    roundTemplates.push(html`
+                        <round-editor .appContext=${this.appContext} .roundIndex=${i}></round-editor>
+                    `);
+                } else {
+                    roundTemplates.push(html`
+                        <round-element .appContext=${this.appContext} .roundIndex=${i}></round-element>
+                    `);
+                }
             }
         }
 

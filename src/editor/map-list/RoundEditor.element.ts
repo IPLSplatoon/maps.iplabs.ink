@@ -40,6 +40,7 @@ export class RoundEditor extends LitElement {
                 align-items: center;
                 flex-wrap: nowrap;
                 width: 100%;
+                border-bottom: .05em solid var(--container-color);
             }
 
             button {
@@ -54,7 +55,7 @@ export class RoundEditor extends LitElement {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                margin-left: var(--padding);
+                margin-left: calc(var(--padding) / 2);
                 height: 100%;
             }
 
@@ -74,7 +75,7 @@ export class RoundEditor extends LitElement {
                 flex-wrap: wrap;
                 gap: var(--gap);
                 border-radius: 15px;
-                background: rgba(248, 216, 227, 0.10);
+                background: linear-gradient(180deg, rgba(248, 216, 227, 0.00) -150%, rgba(248, 216, 227, 0.10) 100%);
                 width: 100%;
             }
 

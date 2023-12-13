@@ -1,9 +1,9 @@
 import { CSSResult, LitElement, html, css, TemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { variableStyles } from "../../styles/Variable.styles";
-import { containerStyles } from "../../styles/Container.styles";
-import { buttonStyles } from "../../styles/Button.styles";
-import { AppContext, Game } from "../../types-interfaces/Interfaces";
+import { variableStyles } from "../../styles/Variable.styles.ts";
+import { containerStyles } from "../../styles/Container.styles.ts";
+import { buttonStyles } from "../../styles/Button.styles.ts";
+import { AppContext, Game } from "../../types-interfaces/Interfaces.ts";
 import "./Round.element.ts"
 import "./RoundEditor.element.ts"
 import _ from "lodash";

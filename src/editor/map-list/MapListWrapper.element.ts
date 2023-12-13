@@ -5,7 +5,7 @@ import { containerStyles } from "../../styles/Container.styles";
 import { buttonStyles } from "../../styles/Button.styles";
 import { AppContext } from "../../types-interfaces/Interfaces";
 import "./MapListTools.element.ts"
-import "./RoundsList.elements.ts"
+import "./RoundsList.element.ts"
 
 @customElement('map-list-wrapper')
 export class MapListWrapper extends LitElement {

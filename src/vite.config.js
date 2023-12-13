@@ -11,5 +11,14 @@ export default defineConfig({
 		},
 		outDir: '../dist',
 		emptyOutDir: true
+	},
+	define: {
+		BUILD_DATE: getBuildDate()
 	}
 })
+
+function getBuildDate() {
+	return {
+		date: new Date().toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"}) 
+	}
+}

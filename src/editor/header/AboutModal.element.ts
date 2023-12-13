@@ -10,6 +10,7 @@ import back from "../../assets/back-yellow.svg"
 
 @customElement('about-modal')
 export class AboutModal extends LitElement {
+
     static styles: CSSResult[] = [
         variableStyles,
         containerStyles,
@@ -67,9 +68,17 @@ export class AboutModal extends LitElement {
                             <img src=${logo}>
                             <div>maps.iplabs.ink</div>
                         </div>
+                        <div class="wrapper" style="font-size: 1.2em">
+                            <div>Splatoon tournament map list creator built for the community, by the community. Features map pool creation, round creation, map list generation algorithms, map list stats, map pool graphics creation, and easy sharing of map lists.</div>
+                            <div>This project is open source. Submit bug reports or feature requests at the project’s <a target="_blank" href="https://github.com/IPLSplatoon/maps.iplabs.ink">Github page</a>.</div>
+                            <div>
+                                Credits:<br>
+                                Created and maintained by <a target="_blank" href="https://jpg.contact/">.jpg</a><br>
+                                Hosted and supported by <a target="_blank" href="https://iplabs.ink/">Inkling Performance Labs</a>
+                            </div>
+                        </div>
                         <div class="wrapper">
-                            <div>Splatoon tournament map list generator build for the community, by the community.</div>
-                            <div>Project was created by <a href="https://jpg.contact/" target="_blank">.jpg</a> for <a href="https://iplabs.ink/" target="_blank">Inkling Performance Labs</a>.</div>
+                            Last updated on ${BUILD_DATE.date}.
                         </div>
                     </div>
                 </div>

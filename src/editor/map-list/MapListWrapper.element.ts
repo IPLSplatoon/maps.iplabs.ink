@@ -32,9 +32,15 @@ export class MapListWrapper extends LitElement {
     ]
 
     render(): TemplateResult {
+        let tools = html`<map-list-tools .appContext=${this.appContext}></map-list-tools>`
+
+        if (this.appContext?.rounds.length === 0) {
+            tools = html``;
+        }
+
         return html`
             <div class="container bg">
-                <map-list-tools .appContext=${this.appContext}></map-list-tools>
+                ${tools}
                 <rounds-list .appContext=${this.appContext}></rounds-list>
             </div>
         `;

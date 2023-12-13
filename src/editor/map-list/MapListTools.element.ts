@@ -23,8 +23,8 @@ export class MapListTools extends LitElement {
                 height: 3.2em;
                 white-space: nowrap;
                 color: var(--color);
-                overflow-x: hidden;
                 width: 100%;
+                overflow: hidden;
             }
 
             .wrapper {
@@ -32,7 +32,6 @@ export class MapListTools extends LitElement {
                 align-items: center;
                 flex-wrap: nowrap;
                 justify-content: flex-start;
-                min-width: fit-content;
                 width: calc(100% - 2 * var(--padding));
                 padding: 0 var(--padding);
                 height: 100%;
@@ -53,7 +52,7 @@ export class MapListTools extends LitElement {
 
     render(): TemplateResult {
         return html`
-            <div class="wrapper" @wheel=${this.handleWheelScroll}>
+            <div id="scrollTarget" class="wrapper horizontal overflow" @wheel=${this.handleWheelScroll}>
                 <div>Map List Tools</div>
                 <button class="generate">Generate</button>
                 <button>Stats</button>
@@ -64,12 +63,16 @@ export class MapListTools extends LitElement {
 
     private handleWheelScroll(e: WheelEvent): void {
         const scrollAmount = e.deltaY / 1.5;
-        const container = this as HTMLElement;
-        gsap.to(container, {
-            scrollLeft: container.scrollLeft + scrollAmount,
-            ease: "power2.inOut",
-            duration: 0.05
-        });
+        const container = this.shadowRoot?.getElementById("scrollTarget") as HTMLDivElement;
+        if (Math.abs(e.deltaY) >= 100){
+            gsap.to(container, {
+                scrollLeft: container.scrollLeft + scrollAmount,
+                ease: "power2.inOut",
+                duration: 0.05
+            });
+        } else {
+            container.scrollLeft += scrollAmount;
+        }
     }
 
     private handleResetClick(): void {

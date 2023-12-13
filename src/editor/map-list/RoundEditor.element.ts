@@ -100,10 +100,12 @@ export class RoundEditor extends LitElement {
 
             input[type="text"] {
                 width: 10em;
+                cursor: text;
             }
 
             input[type="number"] {
                 width: 3em;
+                cursor: text;
             }
 
             /* keeps the number input arrows on the screen */

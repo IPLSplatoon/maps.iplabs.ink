@@ -33,7 +33,7 @@ export class HeaderWrapper extends LitElement {
 
             .container {
                 width: 100%;
-                height: calc(100%);
+                height: 100%;
                 padding-left: var(--padding);
                 padding-right: var(--padding);
                 gap: var(--gap);
@@ -96,11 +96,15 @@ export class HeaderWrapper extends LitElement {
     private handleWheelScroll(e: WheelEvent): void {
         const scrollAmount = e.deltaY / 1.5;
         const container = this.shadowRoot?.getElementById("scrollTarget") as HTMLDivElement;
-        gsap.to(container, {
-            scrollLeft: container.scrollLeft + scrollAmount,
-            ease: "power2.inOut",
-            duration: 0.05
-        })
+        if (Math.abs(e.deltaY) >= 100){
+            gsap.to(container, {
+                scrollLeft: container.scrollLeft + scrollAmount,
+                ease: "power2.inOut",
+                duration: 0.05
+            });
+        } else {
+            container.scrollLeft += scrollAmount;
+        }
     }
 
     private handleSaveClick(): void {
@@ -108,7 +112,7 @@ export class HeaderWrapper extends LitElement {
         if (!this.appContext) return;
         var file = new Blob([JSON.stringify(this.appContext)], {type: 'text/plain'});
         a.href = URL.createObjectURL(file);
-        a.download = "mapsiplabsink.json";
+        a.download = "maps-iplabs-ink.json";
         a.click();
     }
 

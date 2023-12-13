@@ -22,24 +22,20 @@ export class MapListExportWrapper extends LitElement {
         buttonStyles,
         css`
             :host {
+                display: flex;
                 --container-color: rgba(224, 218, 252, 0.15);
                 --color: var(--purple);
                 color: var(--color);
                 height: 3.2em;
-                overflow-x: hidden;
                 border-radius: 3px 3px 15px 15px;
             }
 
             .container.bg {
-                border-radius: 0;
-                width: calc(100% - 2 * var(--padding));
-                min-width: fit-content;
+                border-radius: 3px 3px 15px 15px;
+                width: 100%;
                 height: 100%;
-                padding: 0 var(--padding);
-                display: flex;
-                flex-wrap: nowrap;
-                flex-direction: row;
-                align-items: center;
+                padding-left: var(--padding);
+                padding-right: var(--padding);
                 gap: var(--gap);
                 white-space: nowrap;
             }
@@ -47,9 +43,12 @@ export class MapListExportWrapper extends LitElement {
     ]
 
     render(): TemplateResult {
+        if (this.appContext?.rounds.length === 0){
+            return html`<div class="container bg">Add rounds to export</div>`;
+        }
         return html`
-            <div class="container bg" @wheel=${this.handleWheelScroll}>
-                <div>Export Map List</div>
+            <div id="scrollTarget" class="container bg horizontal overflow" @wheel=${this.handleWheelScroll}>
+                <div @wheel=${this.handleWheelScroll}>Export Map List</div>
                 <button @click=${this.handleShareLinkClicked}>Share Link To View</button>
                 <button @click=${this.handleDiscordMessageClicked}>Discord Message</button>
                 <button @click=${this.handleIPLOverlayJSONClicked}>IPL Overlay JSON</button>
@@ -59,12 +58,16 @@ export class MapListExportWrapper extends LitElement {
 
     private handleWheelScroll(e: WheelEvent): void {
         const scrollAmount = e.deltaY / 1.5;
-        const container = this as HTMLElement;
-        gsap.to(container, {
-            scrollLeft: container.scrollLeft + scrollAmount,
-            ease: "power2.inOut",
-            duration: 0.05
-        });
+        const container = this.shadowRoot?.getElementById("scrollTarget") as HTMLDivElement;
+        if (Math.abs(e.deltaY) >= 100){
+            gsap.to(container, {
+                scrollLeft: container.scrollLeft + scrollAmount,
+                ease: "power2.inOut",
+                duration: 0.05
+            });
+        } else {
+            container.scrollLeft += scrollAmount;
+        }
     }
 
     private handleShareLinkClicked(): void {

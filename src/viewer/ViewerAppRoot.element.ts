@@ -80,8 +80,6 @@ export class ViewerAppRoot extends LitElement {
                     const decoded = decodeAppContext(context);
                     this.appContext = decoded;
                 }
-            } else {
-                window.location.replace(window.location.host);
             }
         } catch (e) {
             console.error(e);

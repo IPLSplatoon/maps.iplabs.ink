@@ -44,7 +44,7 @@ export class MapListExportWrapper extends LitElement {
 
     render(): TemplateResult {
         if (this.appContext?.rounds.length === 0){
-            return html`<div class="container bg">Add rounds to export</div>`;
+            return html`<div class="container bg horizontal">Add rounds to export</div>`;
         }
         return html`
             <div id="scrollTarget" class="container bg horizontal overflow" @wheel=${this.handleWheelScroll}>

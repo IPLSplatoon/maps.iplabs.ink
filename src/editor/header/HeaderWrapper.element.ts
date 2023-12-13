@@ -82,7 +82,10 @@ export class HeaderWrapper extends LitElement {
         return html`
         <img src=${icon}>
         <div @wheel=${this.handleWheelScroll} class="container bg horizontal overflow" id="scrollTarget">
-            <div @wheel=${this.handleWheelScroll} class="logo-text">maps.iplabs.ink <span class="logo-subtext">Editor</span></div>
+            <div @wheel=${this.handleWheelScroll} class="logo-text">
+                maps.iplabs.ink
+                <span class="logo-subtext">Editor</span>
+            </div>
             <div class="container horizontal button-container">
                 <button @click=${this.handleSaveClick}>Save</button>
                 <button @click=${this.handleLoadClick}>Load</button>

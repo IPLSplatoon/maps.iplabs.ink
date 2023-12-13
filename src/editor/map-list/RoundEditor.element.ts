@@ -130,7 +130,7 @@ export class RoundEditor extends LitElement {
                 </div>
                 <div>
                     <div class="label">Games</div>
-                    <input id="games" type="number" value=${this.round.games.length} min="1" step="2">
+                    <input id="games" type="number" value=${this.round.games.length} min="1" max="15" step="2">
                 </div>
                 <div>
                     <div class="label">Play Style</div>

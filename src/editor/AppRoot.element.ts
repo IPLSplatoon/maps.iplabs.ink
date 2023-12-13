@@ -6,6 +6,7 @@ import "./header/HeaderWrapper.element.ts";
 import { decodeAppContext, encodeAppContext } from "../helpers/AppContext.ts";
 import "./map-pool/MapPoolWrapper.element.ts";
 import "./map-list/MapListWrapper.element.ts";
+import "./map-list-export/MapListExportWrapper.element.ts";
 import { AppContext, MapPool, Round } from "../types-interfaces/Interfaces";
 import { Mode } from "../types-interfaces/Types.ts";
 import "../assets/icon-full.png";
@@ -69,13 +70,6 @@ export class AppRoot extends LitElement {
             height: 100%;
             overflow: hidden;
         }
-
-        /*temp*/
-        map-list-export-wrapper {
-            height: 3.2em;
-            background: #2d333e;
-            border-radius: 3px 3px 15px 15px;
-        }
         `
     ]
 
@@ -123,7 +117,7 @@ export class AppRoot extends LitElement {
                 <map-pool-wrapper .appContext=${this.appContext}></map-pool-wrapper>
                 <div class="map-list-wrapper">
                     <map-list-wrapper .appContext=${this.appContext}></map-list-wrapper>
-                    <map-list-export-wrapper></map-list-export-wrapper>
+                    <map-list-export-wrapper .appContext=${this.appContext}></map-list-export-wrapper>
                 </div>    
             </div>
         </div>  

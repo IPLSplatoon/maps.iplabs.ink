@@ -8,6 +8,7 @@ import "./map-pool/MapPoolWrapper.element.ts";
 import "./map-list/MapListWrapper.element.ts";
 import { AppContext, MapPool, Round } from "../types-interfaces/Interfaces";
 import { Mode } from "../types-interfaces/Types.ts";
+import "../assets/icon-full.png";
 
 @customElement('app-root')
 export class AppRoot extends LitElement {

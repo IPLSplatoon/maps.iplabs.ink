@@ -1,0 +1,29 @@
+{
+  "name": "iplmapgen2",
+  "version": "2.0.0",
+  "description": "A map list for Splatoon tournaments.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IPLSplatoon/IPLMapGen2.git"
+  },
+  "author": ".jpg",
+  "bugs": {
+    "url": "https://github.com/IPLSplatoon/IPLMapGen2/issues"
+  },
+  "type": "module",
+  "homepage": "https://github.com/IPLSplatoon/IPLMapGen2#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.202",
+    "compress-json": "^2.1.2",
+    "gsap": "^3.12.3",
+    "lit": "^3.1.0",
+    "lodash": "^4.17.21",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.6"
+  },
+  "scripts": {
+    "dev": "vite src",
+    "build": "vite build src"
+  }
+}

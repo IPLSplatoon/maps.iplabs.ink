@@ -205,15 +205,19 @@ input:focus{
     color: var(--color-accent-dark);
 }
 
-.splat-2-warn{
+.warn {
     background: var(--color-primary);
     padding: 1rem;
     border-radius: 1.25rem;
 }
 
-.splat-2-warn a{
+.warn a{
     text-decoration: underline;
     cursor: pointer;
+}
+
+.warn:not(:first-of-type) {
+    margin-top: 1rem;
 }
 
 .button{

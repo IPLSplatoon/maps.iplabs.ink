@@ -55,7 +55,8 @@ export class RoundEditor extends LitElement {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                margin-left: calc(var(--padding) / 2);
+                margin-left: calc(var(--padding) * .5);
+                margin-right: calc(var(--padding) * -.5);
                 height: 100%;
             }
 
@@ -67,8 +68,8 @@ export class RoundEditor extends LitElement {
             }
 
             .editor-container {
-                padding: .75em calc(var(--padding) / 2);
-                margin: .75em calc(var(--padding) / 2);
+                padding: var(--padding);
+                margin: var(--padding);
                 display: flex;
                 flex-direction: row;
                 align-items: flex-end;

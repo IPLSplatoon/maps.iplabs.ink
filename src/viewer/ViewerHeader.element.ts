@@ -5,6 +5,7 @@ import { buttonStyles } from "../styles/Button.styles.ts";
 import { containerStyles } from "../styles/Container.styles.ts";
 import { variableStyles } from "../styles/Variable.styles.ts";
 import { AppContext } from "../types-interfaces/Interfaces.ts";
+import { encodeAppContext } from "../helpers/AppContext.ts";
 
 @customElement('viewer-header')
 export class ViewerHeader extends LitElement {
@@ -88,7 +89,7 @@ export class ViewerHeader extends LitElement {
     }
 
     private handleEnterEditorClick(): void {
-        const params = new URLSearchParams(window.location.search);
-        window.location.assign("/?" + params.toString());
+        if (!this.appContext) return;
+        window.location.assign("/?c=" + encodeAppContext(this.appContext));
     }
 }

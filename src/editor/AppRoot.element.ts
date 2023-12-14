@@ -80,6 +80,12 @@ export class AppRoot extends LitElement {
         }
 
         @media only screen and (max-width: 47rem) {
+            :host {
+                min-height: calc(100vh - var(--padding) * 2);
+                height: auto;
+                overflow-y: auto;
+            }
+
             .mobile-nav {
                 display: flex;
                 flex-direction: row;

@@ -118,6 +118,18 @@ export class RoundEditor extends LitElement {
                 font-style: italic;
                 font-size: .7em;
             }
+
+            @media only screen and (max-width: 29rem) {
+                .editor-container {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    width: 100%;
+                }
+
+                button {
+                    font-size: .9em;
+                }
+            }
         `
     ];
 

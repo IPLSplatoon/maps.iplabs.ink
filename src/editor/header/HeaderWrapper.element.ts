@@ -39,8 +39,13 @@ export class HeaderWrapper extends LitElement {
                 gap: var(--gap);
             }
 
-            img {
+            .logo-main {
                 height: 100%;
+            }
+
+            .logo-mobile {
+                display: none;
+                height: 75%;
             }
 
             .logo-text {
@@ -74,6 +79,16 @@ export class HeaderWrapper extends LitElement {
                     height: 2.8em;
                 }       
             }
+
+            @media only screen and (max-width: 34rem) {
+                .logo-main {
+                    display: none;
+                }
+
+                .logo-mobile {
+                    display: block;
+                }
+            }
         `
     ];
 
@@ -86,8 +101,9 @@ export class HeaderWrapper extends LitElement {
 
     render(): TemplateResult {
         return html`
-        <img src=${icon}>
+        <img class="logo-main" src=${icon}>
         <div @wheel=${this.handleWheelScroll} class="container bg horizontal overflow" id="scrollTarget">
+            <img class="logo-mobile" src=${icon}>
             <div @wheel=${this.handleWheelScroll} class="logo-text">
                 maps.iplabs.ink
                 <span class="logo-subtext">Editor</span>

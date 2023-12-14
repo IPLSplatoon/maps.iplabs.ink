@@ -12,7 +12,7 @@ export class ViewerHeader extends LitElement {
     @property()
     appContext?: AppContext;
     @property()
-    mobileView: "map-pool" | "map-list" = "map-list";
+    mobileView?: "map-pool" | "map-list";
 
     static styles: CSSResult[] = [
         variableStyles,

@@ -98,17 +98,25 @@ export class ViewerAppRoot extends LitElement {
         }
 
         this.addEventListener("mobile-switch", () => {
+            console.log(this.mobileView);
             this.mobileView = this.mobileView === "map-pool" ? "map-list" : "map-pool";
+            console.log(this.mobileView);
         });
     }
 
     render(): TemplateResult {
         return html`
         <div class="primary-container">
-            <viewer-header .appContext=${this.appContext}></viewer-header>
+            <viewer-header .mobileView=${this.mobileView} .appContext=${this.appContext}></viewer-header>
             <div class="side-by-side">
-                <map-pool-wrapper .appContext=${this.appContext} class=${this.mobileView === "map-pool" ? "mobile-focus" : ""}></map-pool-wrapper>
-                <map-list-wrapper .appContext=${this.appContext} class=${this.mobileView === "map-list" ? "mobile-focus" : ""}></map-list-wrapper>
+                <map-pool-wrapper
+                    .appContext=${this.appContext}
+                    class=${this.mobileView === "map-pool" ? "mobile-focus" : ""}>
+                </map-pool-wrapper>
+                <map-list-wrapper
+                    .appContext=${this.appContext}
+                    class=${this.mobileView === "map-list" ? "mobile-focus" : ""}>
+                </map-list-wrapper>
             </div>
         </div>  
         `;

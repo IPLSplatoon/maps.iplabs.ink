@@ -73,7 +73,7 @@ export class MapListExportWrapper extends LitElement {
     private handleShareLinkClicked(): void {
         if (!this.appContext) return;
 
-        const location = window.location.host + "/viewer/";
+        const location = "/viewer/";
         const params = "?c=" + encodeAppContext(this.appContext);
 
         window.open(location + params, "_blank");

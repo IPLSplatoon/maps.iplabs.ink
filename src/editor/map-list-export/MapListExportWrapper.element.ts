@@ -76,8 +76,7 @@ export class MapListExportWrapper extends LitElement {
         const location = window.location.host + "/viewer/";
         const params = "?c=" + encodeAppContext(this.appContext);
 
-        navigator.clipboard.writeText(location + params);
-        alert("Link copied to clipboard.");
+        window.open(location + params, "_blank");
     }
 
     private handleDiscordMessageClicked(): void {

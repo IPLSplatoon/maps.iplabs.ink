@@ -42,7 +42,6 @@ export class ViewerMapPoolWrapper extends LitElement {
         let mapListTemplates: TemplateResult[] = [];
         for (let i = 0; i < modeAbbreviations.length; i++) {
             const mapPool = this.appContext.mapPool[modeAbbreviations[i]];
-            console.log(mapPool);
             if (!mapPool || mapPool.length === 0) continue;
             const maps: TemplateResult[] = [];
             for (let j = 0; j < mapPool.length; j++){

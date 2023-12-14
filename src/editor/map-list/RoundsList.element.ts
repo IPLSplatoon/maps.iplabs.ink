@@ -34,6 +34,13 @@ export class RoundsList extends LitElement {
             .add-round{
                 margin: var(--margin);
             }
+
+            @media only screen and (max-width: 47rem) {
+                :host {
+                    height: auto;
+                    min-height: 50vh;
+                }
+            }
         `
     ];
 

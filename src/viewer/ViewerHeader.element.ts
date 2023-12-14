@@ -11,8 +11,8 @@ import { encodeAppContext } from "../helpers/AppContext.ts";
 export class ViewerHeader extends LitElement {
     @property()
     appContext?: AppContext;
-    @state()
-    modals: TemplateResult[] = [];
+    @property()
+    mobileView: "map-pool" | "map-list" = "map-list";
 
     static styles: CSSResult[] = [
         variableStyles,
@@ -65,15 +65,55 @@ export class ViewerHeader extends LitElement {
                 align-items: center;
                 gap: var(--gap);
             }
+
+            .mobile-switch-button {
+                display: none;
+            }
+
+            .overflow.horizontal {
+                display: flex;
+                flex-direction: row;
+                gap: var(--gap);
+                flex-wrap: wrap;
+            }
+
+            .green {
+                --color: var(--green);
+            }
+
+            .pink {
+                --color: var(--pink);
+            }
+
+            @media only screen and (max-width: 47rem) { 
+                :host {
+                    flex-direction: column;
+                    height: auto;
+                    gap: var(--gap);
+                }
+
+                .logo-text {
+                    font-size: 1.3em;
+                    white-space: normal;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                
+                img {
+                    height: 2.5em;
+                }
+
+                .logo-container {
+                    gap: calc(var(--gap) / 2);
+                }
+
+                .mobile-switch-button {
+                    display: block;
+                }
+            }
         `
     ];
-
-    constructor() {
-        super();
-        this.addEventListener('modal-closed', () => {
-            this.modals = [];
-        });
-    }
 
     render(): TemplateResult {
         return html`
@@ -84,12 +124,24 @@ export class ViewerHeader extends LitElement {
                 <span class="logo-subtext">Viewer</span>
             </div>
         </div>
-        <button @click=${this.handleEnterEditorClick}>Enter Editor</button>
+        <div class="overflow horizontal" style="width: auto;">
+            <button class="mobile-switch-button ${this.mobileView == "map-list" ? "green" : "pink"}" @click=${this.handleMobileSwitchClick}>
+                ${this.mobileView === "map-list" ? "View Map Pool" : "View Map List"}
+            </button>
+            <button @click=${this.handleEnterEditorClick}>Enter Editor</button>
+        </div>
         `;
     }
 
     private handleEnterEditorClick(): void {
         if (!this.appContext) return;
         window.location.assign("/?c=" + encodeAppContext(this.appContext));
+    }
+
+    private handleMobileSwitchClick(): void {
+        const event = new CustomEvent("mobile-switch", {
+            composed: true
+        });
+        this.dispatchEvent(event);
     }
 }

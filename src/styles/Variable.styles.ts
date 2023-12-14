@@ -48,7 +48,8 @@ export const variableStyles: CSSResult = css`
         }
     }
 
-    @media only screen and (max-width: 47rem) {
+    /*mobile mode start*/
+    @media only screen and (max-width: 47rem) { 
         :host {
             --font-size: 1.2rem;
         }

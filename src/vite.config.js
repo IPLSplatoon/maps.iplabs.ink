@@ -10,8 +10,7 @@ export default defineConfig({
 			}
 		},
 		outDir: '../dist',
-		emptyOutDir: true,
-		manifest: true
+		emptyOutDir: true
 	},
 	define: {
 		BUILD_DATE: getBuildDate()

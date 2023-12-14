@@ -17,23 +17,21 @@ export const variableStyles: CSSResult = css`
         --font-size: 1.5rem;
     }
 
-    @media only screen and (min-width: 1000px) {
-        ::-webkit-scrollbar {
-            width: .4em;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--container-color)
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--color);
-            border-radius: .2em;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: white;
-        }
+    ::-webkit-scrollbar {
+        width: .4em;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--container-color)
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--color);
+        border-radius: .2em;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: white;
     }
 
     @media only screen and (max-width: 1199px) {
@@ -41,13 +39,4 @@ export const variableStyles: CSSResult = css`
             --font-size: 1.2rem;
         }
     }
-
-    @media only screen and (max-width: 999px) {
-        :host {
-            --font-size: 20px;
-            --margin: .8em;
-            --padding: .8em;
-        }
-    }
-
 `

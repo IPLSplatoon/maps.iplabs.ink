@@ -24,7 +24,6 @@
   },
   "scripts": {
     "dev": "vite src",
-    "build": "vite build src",
-    "dev-host": "vite src --host"
+    "build": "vite build src"
   }
 }

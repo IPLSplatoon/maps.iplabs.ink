@@ -67,21 +67,4 @@ export const modalStyles: CSSResult = css`
         width: 100%;
         height: 100%;
     }
-
-    @media only screen and (max-width: 999px) {
-
-        .modal {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            z-index: 100;
-        }
-
-        .modal-header {
-            padding: 0 var(--padding);
-            margin-top: var(--margin);
-            width: calc(100% - var(--padding) * 2);
-        }
-
-    }
 `

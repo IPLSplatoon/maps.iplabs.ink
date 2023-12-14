@@ -10,7 +10,6 @@ import "./map-list-export/MapListExportWrapper.element.ts";
 import { AppContext, MapPool, Round } from "../types-interfaces/Interfaces";
 import { Mode } from "../types-interfaces/Types.ts";
 import "../assets/icon-full.png";
-import "./header/MobileHeaderWrapper.element.ts";
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
@@ -71,34 +70,6 @@ export class AppRoot extends LitElement {
             height: 100%;
             overflow: hidden;
         }
-
-        moblie-header-wrapper {
-            display: none;
-        }
-
-        @media only screen and (max-width: 999px) {
-            :host{
-                padding: 0;
-                width: 100vw;
-                min-height: 100vh;
-            }
-            
-            .primary-container {
-                gap: 0;
-            }
-
-            moblie-header-wrapper {
-                display: flex;
-            }
-
-            map-pool-wrapper {
-                display: none;
-            }
-
-            header-wrapper {
-                display: none;
-            }
-        }
         `
     ]
 
@@ -141,7 +112,6 @@ export class AppRoot extends LitElement {
     render(): TemplateResult {
         return html`
         <div class="primary-container">
-            <moblie-header-wrapper .appContext=${this.appContext}></moblie-header-wrapper>
             <header-wrapper .appContext=${this.appContext}></header-wrapper>
             <div class="side-by-side">
                 <map-pool-wrapper .appContext=${this.appContext}></map-pool-wrapper>

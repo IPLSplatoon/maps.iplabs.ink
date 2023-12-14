@@ -4,7 +4,7 @@ import { CSSResult, css } from "lit";
 
 export const modalStyles: CSSResult = css`
     .modal {
-        position: absolute;
+        position: fixed;
         top: 0; 
         left: 0;
         width: calc(100vw - var(--padding) * 2);

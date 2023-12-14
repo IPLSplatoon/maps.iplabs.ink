@@ -60,7 +60,7 @@ export class RoundElement extends LitElement {
             .separator {
                 width: .09em;
                 height: 1.5em;
-                background: var(--color);
+                background: var(--container-color);
             }
 
             .bold {
@@ -71,6 +71,28 @@ export class RoundElement extends LitElement {
             .label {
                 font-size: .8em;
                 line-height: 1em;
+            }
+
+            @media only screen and (max-width: 29rem) {
+                .game {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0;
+                    width: 100%;
+                }
+
+                .game:not(:last-child) {
+                    border-bottom: .07em solid var(--container-color);
+                    padding-bottom: calc(var(--gap) / 2);
+                }
+
+                .game select {
+                    width: 100%;
+                }
+                
+                .separator {
+                    display: none;
+                }
             }
         `
     ];

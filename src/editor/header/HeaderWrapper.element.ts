@@ -68,6 +68,12 @@ export class HeaderWrapper extends LitElement {
                 top: 0;
                 left: 0;
             }
+
+            @media only screen and (max-width: 60rem) {
+                :host {
+                    height: 2.8em;
+                }       
+            }
         `
     ];
 

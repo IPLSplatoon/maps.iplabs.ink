@@ -34,9 +34,31 @@ export const variableStyles: CSSResult = css`
         background: white;
     }
 
-    @media only screen and (max-width: 1199px) {
+    @media only screen and (max-width: 75rem) {
+        :host {
+            --font-size: 1.25rem;
+        }
+    }
+
+    @media only screen and (max-width: 60rem) {
+        :host {
+            --font-size: 1rem;
+            --margin: .8em;
+            --padding: .8em;
+        }
+    }
+
+    @media only screen and (max-width: 47rem) {
         :host {
             --font-size: 1.2rem;
+        }
+    }
+
+    @media only screen and (max-width: 34rem) {
+        :host {
+            --font-size: 1rem;
+            --margin: .8em;
+            --padding: .8em;
         }
     }
 `

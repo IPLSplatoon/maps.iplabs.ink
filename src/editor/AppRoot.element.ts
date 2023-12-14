@@ -1,5 +1,5 @@
 import { LitElement, html, css, TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { variableStyles } from "../styles/Variable.styles.ts";
 import * as _ from "lodash";
 import "./header/HeaderWrapper.element.ts";
@@ -10,6 +10,7 @@ import "./map-list-export/MapListExportWrapper.element.ts";
 import { AppContext, MapPool, Round } from "../types-interfaces/Interfaces";
 import { Mode } from "../types-interfaces/Types.ts";
 import "../assets/icon-full.png";
+import { buttonStyles } from "../styles/Button.styles.ts";
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
@@ -24,9 +25,12 @@ export class AppRoot extends LitElement {
         },
         rounds: []
     };
+    @state()
+    mobileNav: "map-pool" | "map-list" = "map-list";
 
     static styles = [
         variableStyles,
+        buttonStyles,
         css`
         :host {
             display: flex;
@@ -69,6 +73,62 @@ export class AppRoot extends LitElement {
             width: 100%;
             height: 100%;
             overflow: hidden;
+        }
+
+        .mobile-nav {
+            display: none;
+        }
+
+        @media only screen and (max-width: 47rem) {
+            .mobile-nav {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: var(--margin);
+                width: 100%;
+                font-size: .8em;
+            }
+
+            .mobile-nav button {
+                width: 100%;
+                min-width: 7em;
+                text-align: center;
+            }
+
+            .mobile-nav button.green {
+                --color: var(--green);
+                --on-background: rgba(221, 252, 243, 0.15);
+            }
+
+            .mobile-nav button.pink {
+                --color: var(--pink);
+                --on-background: rgba(248, 216, 227, 0.15);
+            }
+
+            .mobile-nav button.mobile-focus {
+                width: calc(100% + 20em);
+                background: var(--on-background);
+            }
+
+            .mobile-nav button.mobile-focus:hover {
+                background: var(--color);
+            }
+
+            map-pool-wrapper.mobile-focus {
+                display: flex;
+            }
+
+            map-pool-wrapper {
+                display: none;
+            }
+
+            .map-list-wrapper.mobile-focus {
+                display: flex;
+            }
+
+            .map-list-wrapper {
+                display: none;
+            }
         }
         `
     ]
@@ -113,9 +173,13 @@ export class AppRoot extends LitElement {
         return html`
         <div class="primary-container">
             <header-wrapper .appContext=${this.appContext}></header-wrapper>
+            <div class="mobile-nav">
+                <button class="green ${this.mobileNav == "map-pool" ? "mobile-focus" : ""}" @click=${this.handleMapPoolMobileClicked}>Map Pool</button>
+                <button class="pink ${this.mobileNav == "map-list" ? "mobile-focus" : ""}" @click=${this.handleMapListMobileClicked}>Map List</button>
+            </div>
             <div class="side-by-side">
-                <map-pool-wrapper .appContext=${this.appContext}></map-pool-wrapper>
-                <div class="map-list-wrapper">
+                <map-pool-wrapper class="${this.mobileNav == "map-pool" ? "mobile-focus" : ""}" .appContext=${this.appContext}></map-pool-wrapper>
+                <div class="map-list-wrapper ${this.mobileNav == "map-list" ? "mobile-focus" : ""}">
                     <map-list-wrapper .appContext=${this.appContext}></map-list-wrapper>
                     <map-list-export-wrapper .appContext=${this.appContext}></map-list-export-wrapper>
                 </div>    
@@ -169,5 +233,13 @@ export class AppRoot extends LitElement {
         }
 
         return roundsClone;
+    }
+
+    private handleMapPoolMobileClicked() {
+        this.mobileNav = "map-pool";
+    }
+
+    private handleMapListMobileClicked() {
+        this.mobileNav = "map-list";
     }
 }

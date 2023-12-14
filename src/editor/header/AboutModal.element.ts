@@ -29,6 +29,7 @@ export class AboutModal extends LitElement {
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
+                flex-wrap: wrap;
                 align-items: center;
                 gap: calc(var(--gap) * 1.5);
                 height: auto;

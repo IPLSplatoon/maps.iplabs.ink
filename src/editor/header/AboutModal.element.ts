@@ -23,6 +23,8 @@ export class AboutModal extends LitElement {
                 --color: var(--yellow);
                 color: var(--color);
                 font-size: var(--font-size);
+                width: 100%;
+                height: 100%;
             }
 
             .logo.wrapper {
@@ -51,6 +53,12 @@ export class AboutModal extends LitElement {
 
             a:visited {
                 color: var(--color);
+            }
+
+            @media only screen and (max-width: 999px) {
+                .logo.wrapper {
+                    flex-wrap: wrap;
+                }
             }
         `
     ];

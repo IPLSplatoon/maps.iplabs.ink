@@ -68,6 +68,29 @@ export class HeaderWrapper extends LitElement {
                 top: 0;
                 left: 0;
             }
+
+            @media only screen and (max-width: 999px) {
+                :host {
+                    height: 100%;
+                    width: 100%;
+                }
+
+                img {
+                    display: none;
+                }
+
+                .container.horizontal{
+                    flex-wrap: wrap;
+                }
+                
+                .container.bg {
+                    padding: var(--padding);
+                }
+
+                .button-container {
+                    justify-content: flex-start;
+                }
+            }
         `
     ];
 
@@ -80,6 +103,7 @@ export class HeaderWrapper extends LitElement {
 
     render(): TemplateResult {
         return html`
+        ${this.modals}
         <img src=${icon}>
         <div @wheel=${this.handleWheelScroll} class="container bg horizontal overflow" id="scrollTarget">
             <div @wheel=${this.handleWheelScroll} class="logo-text">
@@ -92,7 +116,6 @@ export class HeaderWrapper extends LitElement {
                 <button @click=${this.handleAboutClick}>About</button>
             </div>  
         </div>
-        ${this.modals}
         `;
     }
 

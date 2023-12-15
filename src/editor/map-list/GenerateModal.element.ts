@@ -98,6 +98,10 @@ export class GenerateModal extends LitElement {
                 white-space: normal;
             }
 
+            .with-wrap {
+                white-space: normal;
+            }
+
             @media only screen and (max-width: 47rem) { 
                 .round-wrapper {
                     flex-direction: column;
@@ -126,7 +130,7 @@ export class GenerateModal extends LitElement {
         let modalContainer: TemplateResult;
         if (!hasModes) {
             modalContainer = html`
-                <div class="wrapper">
+                <div class="wrapper with-wrap">
                     You must add maps to the map pool before you can generate maps.
                 </div>
             `;

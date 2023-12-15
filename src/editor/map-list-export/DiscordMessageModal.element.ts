@@ -48,6 +48,7 @@ export class DiscordMessageModal extends LitElement {
                 border: none;
                 border-radius: 15px;
                 resize: none;
+                font-family: var(--mono);
             }
         `
     ];

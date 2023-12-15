@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { encodeAppContext } from "../../helpers/AppContext";
 import { Counterpick } from "../../types-interfaces/Types";
 import { modeAbbreviationToWords } from "../../helpers/MapMode";
+import "./DiscordMessageModal.element.ts"
 
 @customElement('map-list-export-wrapper')
 export class MapListExportWrapper extends LitElement {
@@ -40,7 +41,15 @@ export class MapListExportWrapper extends LitElement {
                 white-space: nowrap;
             }
         `
-    ]
+    ];
+    
+    constructor(){
+        super();
+
+        this.addEventListener('modal-closed', () => {
+            this.modals = [];
+        });
+    }
 
     render(): TemplateResult {
         if (this.appContext?.rounds.length === 0){
@@ -53,6 +62,7 @@ export class MapListExportWrapper extends LitElement {
                 <button @click=${this.handleDiscordMessageClicked}>Discord Message</button>
                 <button @click=${this.handleIPLOverlayJSONClicked}>IPL Overlay JSON</button>
             </div>
+            ${this.modals}
         `;
     }
 
@@ -81,27 +91,7 @@ export class MapListExportWrapper extends LitElement {
 
     private handleDiscordMessageClicked(): void {
         if (!this.appContext) return;
-
-        let message = "";
-
-        for (let i = 0; i < this.appContext?.rounds.length; i++) {
-            const round = this.appContext?.rounds[i];
-            message += `\`${round?.name}\``;
-            for (let j = 0; j < round?.games.length; j++) {
-                const game = round?.games[j];
-                if (game === "counterpick") {
-                    message += `\n${j + 1}: Counterpick`;
-                } else {
-                    message += `\n${j + 1}: ${modeAbbreviationToWords(game?.mode)} on ${game.map}`;
-                }
-            }
-            if (i !== this.appContext.rounds.length - 1) {
-                message += "\n\n";
-            }
-        }
-
-        navigator.clipboard.writeText(message);
-        alert("Message copied to clipboard.");
+        this.modals = [html`<discord-message-modal .appContext=${this.appContext}></discord-message-modal>`];
     }
 
     private handleIPLOverlayJSONClicked(): void {

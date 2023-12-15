@@ -21,6 +21,7 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
 
         //for each game in round
         for (let j = 0; j < round.games.length; j++) {
+            console.log(round.name, j, modeTracker, mapTracker);
             const game = round.games[j];
             
             //if game is counterpick
@@ -80,6 +81,14 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
                     round.games[j] = newGame;
                     addToMapTracker(mapTracker, newGame.map, MAP_TRACKER_LENGTH);
                     addToModeTracker(modeTracker, newGame.mode, MODE_TRACKER_LENGTH);
+                    continue;
+
+                //if generation is set to "Replace Counterpicks"
+                } else {
+
+                    //we still want to track the map & mode, but not modify the round
+                    addToMapTracker(mapTracker, game.map, MAP_TRACKER_LENGTH);
+                    addToModeTracker(modeTracker, game.mode, MODE_TRACKER_LENGTH);
                     continue;
                 }
             }

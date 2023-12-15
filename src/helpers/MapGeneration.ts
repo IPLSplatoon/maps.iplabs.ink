@@ -12,8 +12,17 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
     const MODE_TRACKER_LENGTH = modes.length - 1;
 
     //track the maps that appear as the algorithm runs, the array can only be as long as half the number of maps in the smallest map pool
-    const mapTracker: Map[] = [];
-    const MAP_TRACKER_LENGTH = getMapQueueLength(mapPool, modes);
+    const recentMapTracker: Map[] = [];
+    const RECENT_MAP_TRACKER_LENGTH = getMapQueueLength(mapPool, modes);
+
+    //track the number of times a map has been played for each mode
+    const modeMapTracker = {} as any;
+    for (let i = 0; i < modes.length; i++) {
+        modeMapTracker[modes[i]] = {};
+        for (let j = 0; j < mapPool[modes[i]].length; j++) {
+            modeMapTracker[modes[i]][mapPool[modes[i]][j]] = 0;
+        }
+    }
 
     //for each round
     for (let i = 0; i < rounds.length; i++) {
@@ -45,10 +54,11 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
                 if (generateMode === "Replace Counterpicks" || generateMode === "Replace All") {
 
                     //generate a new game and replace the game
-                    const newGame = getRandomGame(mapTracker, modeTracker, mapPool, modes);
+                    const newGame = getRandomGame(recentMapTracker, modeTracker, mapPool, modes, modeMapTracker);
                     round.games[j] = newGame;
-                    addToMapTracker(mapTracker, newGame.map, MAP_TRACKER_LENGTH);
+                    addToMapTracker(recentMapTracker, newGame.map, RECENT_MAP_TRACKER_LENGTH);
                     addToModeTracker(modeTracker, newGame.mode, MODE_TRACKER_LENGTH);
+                    addToModeMapTracker(modeMapTracker, newGame.mode, newGame.map);
                     continue;
                 }
 
@@ -59,8 +69,9 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
                 if (dnmRoundIndices.indexOf(i) !== -1) {
                     
                     //we still want to track the map & mode, but not modify the round
-                    addToMapTracker(mapTracker, game.map, MAP_TRACKER_LENGTH);
+                    addToMapTracker(recentMapTracker, game.map, RECENT_MAP_TRACKER_LENGTH);
                     addToModeTracker(modeTracker, game.mode, MODE_TRACKER_LENGTH);
+                    addToModeMapTracker(modeMapTracker, game.mode, game.map);
                     continue;
                 }
 
@@ -76,18 +87,20 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
                 if (generateMode === "Replace Non-Counterpicks" || generateMode === "Replace All") {
 
                     //generate a new game and replace the game
-                    const newGame = getRandomGame(mapTracker, modeTracker, mapPool, modes);
+                    const newGame = getRandomGame(recentMapTracker, modeTracker, mapPool, modes, modeMapTracker);
                     round.games[j] = newGame;
-                    addToMapTracker(mapTracker, newGame.map, MAP_TRACKER_LENGTH);
+                    addToMapTracker(recentMapTracker, newGame.map, RECENT_MAP_TRACKER_LENGTH);
                     addToModeTracker(modeTracker, newGame.mode, MODE_TRACKER_LENGTH);
+                    addToModeMapTracker(modeMapTracker, newGame.mode, newGame.map);
                     continue;
 
                 //if generation is set to "Replace Counterpicks"
                 } else {
 
                     //we still want to track the map & mode, but not modify the round
-                    addToMapTracker(mapTracker, game.map, MAP_TRACKER_LENGTH);
+                    addToMapTracker(recentMapTracker, game.map, RECENT_MAP_TRACKER_LENGTH);
                     addToModeTracker(modeTracker, game.mode, MODE_TRACKER_LENGTH);
+                    addToModeMapTracker(modeMapTracker, game.mode, game.map);
                     continue;
                 }
             }
@@ -104,7 +117,7 @@ function getMapQueueLength(mapPool: MapPool, modes: Mode[]): number {
         const mode = mapPool[modeAbbreviations[i]];
         if (mode.length < lowest) lowest = mode.length;
     }
-    return Math.max(0, lowest / 2);
+    return Math.max(0, Math.ceil(lowest / 2));
 }
 
 function addToMapTracker(mapTracker: Map[], map: Map, len: number): void {
@@ -117,9 +130,13 @@ function addToModeTracker(modeTracker: Mode[], mode: Mode, len: number): void {
     if (modeTracker.length > len) modeTracker.shift();
 }
 
-function getRandomGame(mapTracker: Map[], modeTracker: Mode[], mapPool: MapPool, modes: Mode[]): Game {
+function addToModeMapTracker(modeMapTracker: any, mode: Mode, map: Map): void {
+    modeMapTracker[mode][map]++;
+}
+
+function getRandomGame(mapTracker: Map[], modeTracker: Mode[], mapPool: MapPool, modes: Mode[], modeMapTracker: any): Game {
     const mode = getRandomMode(modes, modeTracker);
-    const map = getRandomMap(mapPool, mode, mapTracker);
+    const map = getRandomMap(mapPool, mode, modeMapTracker, mapTracker);
     return {map, mode};
 }
 
@@ -132,11 +149,25 @@ function getRandomMode(modes: Mode[], modeTracker: Mode[]): Mode {
     return mode;
 }
 
-function getRandomMap(mapPool: MapPool, mode: Mode, mapTracker: Map[]): Map {
+function getRandomMap(mapPool: MapPool, mode: Mode, modeMapTracker: any, mapTracker: Map[]): Map {
     //get a random map from the map pool that doesn't appear in the map tracker
+    
+    let mapsToPick = mapPool[mode].filter(map => mapTracker.indexOf(map) === -1);
+    if (mapsToPick.length === 0) mapsToPick = mapPool[mode];
+
+    //set a target frequency for the map, based on the number of times the map has already appeared
+    let modeMapFrequencyTarget = _.min(_.values(modeMapTracker[mode]));
+    
     let map: Map;
+    let safety = 50;
     do {
-        map = _.sample(mapPool[mode]) as Map;
-    } while (mapTracker.indexOf(map) !== -1);
+        map = _.sample(mapsToPick) as Map;
+        safety--;
+        if (safety === 0) {
+            safety = 50;
+            modeMapFrequencyTarget++;
+        }
+    } while (modeMapTracker[mode][map] > modeMapFrequencyTarget);
+
     return map;
 }

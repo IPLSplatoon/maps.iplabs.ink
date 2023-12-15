@@ -7,7 +7,7 @@ import { modalStyles } from "../../styles/Modal.styles";
 import { getModalCloseTimeline, getModalOpenTimeline } from "../../helpers/ModalAnimations";
 import back from "../../assets/back-purple.svg"
 import { AppContext } from "../../types-interfaces/Interfaces";
-import { modeAbbreviationToWords } from "../../helpers/MapMode";
+import { getPlayStyleString, modeAbbreviationToWords } from "../../helpers/MapMode";
 
 @customElement('discord-message-modal')
 export class DiscordMessageModal extends LitElement {
@@ -97,7 +97,7 @@ export class DiscordMessageModal extends LitElement {
 
         for (let i = 0; i < this.appContext?.rounds.length; i++) {
             const round = this.appContext?.rounds[i];
-            message += `\`${round?.name}\``;
+            message += `\`${round?.name} - ${getPlayStyleString(round.playStyle, round.games.length)}\``;
             for (let j = 0; j < round?.games.length; j++) {
                 const game = round?.games[j];
                 if (game === "counterpick") {

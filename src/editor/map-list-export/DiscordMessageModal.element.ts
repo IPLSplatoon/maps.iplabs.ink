@@ -63,7 +63,7 @@ export class DiscordMessageModal extends LitElement {
                     </div>
                     <div class="modal-contain container bg">
                         <div class="wrapper">
-                            <textarea readonly>${this.getDiscordMessage()}</textarea>
+                            <textarea readonly .value=${this.getDiscordMessage()}></textarea>
                             <button @click=${this.handleCopyClick}>${this.copyButtonText}</button>
                         </div>
                     </div>

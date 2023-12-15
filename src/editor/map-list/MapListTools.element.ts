@@ -6,6 +6,7 @@ import { buttonStyles } from "../../styles/Button.styles";
 import { AppContext } from "../../types-interfaces/Interfaces";
 import { gsap } from "gsap";
 import "./GenerateModal.element.ts";
+import "./StatsModal.element.ts";
 import { generateButtonStyles } from "../../styles/GenerateButton.styles.ts";
 
 @customElement('map-list-tools')
@@ -58,7 +59,7 @@ export class MapListTools extends LitElement {
             <div id="scrollTarget" class="wrapper horizontal overflow" @wheel=${this.handleWheelScroll}>
                 <div>Map List Tools</div>
                 <button class="generate" @click=${this.handleGenerateClick}>Generate</button>
-                <button>Stats</button>
+                <button @click=${this.handleStatsClick}>Stats</button>
                 <button @click=${this.handleResetClick}>Reset</button>
             </div>
             ${this.modals}
@@ -93,5 +94,10 @@ export class MapListTools extends LitElement {
     private handleGenerateClick(): void {
         if (!this.appContext) return;
         this.modals = [html`<generate-modal .appContext=${this.appContext}></generate-modal>`];
+    }
+
+    private handleStatsClick(): void {
+        if (!this.appContext) return;
+        this.modals = [html`<stats-modal .appContext=${this.appContext}></stats-modal>`];
     }
 }

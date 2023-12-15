@@ -21,7 +21,6 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
 
         //for each game in round
         for (let j = 0; j < round.games.length; j++) {
-            console.log(round.name, j, modeTracker, mapTracker);
             const game = round.games[j];
             
             //if game is counterpick

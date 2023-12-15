@@ -61,8 +61,8 @@ export class AppRoot extends LitElement {
             display: flex;
             flex-direction: row;
             gap: var(--margin);
-            height: 100%;
             height: -webkit-fill-available;
+            height: 100%;
             overflow: hidden;
         }
 

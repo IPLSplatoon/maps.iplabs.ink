@@ -97,6 +97,19 @@ export class GenerateModal extends LitElement {
                 font-size: .9em;
                 white-space: normal;
             }
+
+            @media only screen and (max-width: 47rem) { 
+                .round-wrapper {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: calc(var(--gap) / 4);
+                }
+
+                .round-wrapper > .checkbox-container {
+                    width: calc(100% - var(--padding) - 1.85em);
+                    font-size: .9em;
+                }
+            }
         `
     ];
 

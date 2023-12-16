@@ -59,6 +59,7 @@ export class MPGConfigWrapper extends LitElement {
                 background: #00000000;
                 border: .075em solid var(--color);
                 border-radius: 15px;
+                color: var(--color);
             }
 
             select {

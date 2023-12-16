@@ -123,6 +123,7 @@ export class MPGAppRoot extends LitElement {
 
             .graphic-wrapper {
                 height: auto;
+                min-height: min(100vw, 60vh);
             }
         }
         `

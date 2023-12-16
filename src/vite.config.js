@@ -6,7 +6,8 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				editor: './src/index.html',
-				viewer: './src/viewer/index.html'
+				viewer: './src/viewer/index.html',
+				mpg: './src/map-pool-graphic/index.html',
 			}
 		},
 		outDir: '../dist',

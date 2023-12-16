@@ -6,7 +6,8 @@ import { buttonStyles } from "../../styles/Button.styles";
 import { AppContext } from "../../types-interfaces/Interfaces";
 import "./MapPoolEditModal.element"
 import { Mode } from "../../types-interfaces/Types";
-import { maps } from "../../helpers/MapMode";
+import { maps, modeAbbreviations } from "../../helpers/MapMode";
+import { encodeAppContext } from "../../helpers/AppContext";
 
 @customElement('map-pool-wrapper')
 export class MapPoolWrapper extends LitElement {
@@ -93,7 +94,7 @@ export class MapPoolWrapper extends LitElement {
                 </div>
                 <div class="wrapper">
                     <div>Map Pool Tools</div>
-                    <button>Map Pool Graphic</button>
+                    <button @click=${this.handleMapPoolGraphicClick}>Map Pool Graphic</button>
                     <button>Use in sendou.ink</button>
                 </div>
             </div>
@@ -131,5 +132,24 @@ export class MapPoolWrapper extends LitElement {
     private openModal(mode: Mode) {
         const modal = html`<map-pool-edit-modal .appContext=${this.appContext} .targetMode=${mode}></map-pool-edit-modal>`;
         this.modals = [modal];
+    }
+
+    private handleMapPoolGraphicClick(): void {
+        if (!this.appContext) return;
+        
+        let maps = false;
+        for (let i = 0; i < modeAbbreviations.length; i++) {
+            if (this.appContext.mapPool[modeAbbreviations[i]].length > 0) {
+                maps = true;
+                break;
+            }
+        }
+
+        if (!maps) {
+            alert("You need to have at least one map in your map pool to generate a graphic.");
+            return;
+        }
+
+        window.open("/map-pool-graphic/?c=" + encodeAppContext(this.appContext));
     }
 }

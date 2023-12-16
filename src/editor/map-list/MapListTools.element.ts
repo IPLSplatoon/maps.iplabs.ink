@@ -42,6 +42,12 @@ export class MapListTools extends LitElement {
                 padding: 0 var(--padding);
                 height: 100%;
             }
+
+            @media (forced-colors: active) {
+                :host {
+                    border: .2em solid var(--container-color);
+                }
+            }
         `
     ];
 

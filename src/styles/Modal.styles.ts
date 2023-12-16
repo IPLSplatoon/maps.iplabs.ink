@@ -67,4 +67,10 @@ export const modalStyles: CSSResult = css`
         width: 100%;
         height: 100%;
     }
+
+    @media (forced-colors: active) {
+        .back {
+            filter: saturate(0) brightness(2);
+        }
+    }
 `

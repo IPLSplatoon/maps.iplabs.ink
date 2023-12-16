@@ -39,4 +39,31 @@ export const containerStyles: CSSResult = css`
     .overflow.horizontal::-webkit-scrollbar {
         display: none;
     }
+
+    @media (forced-colors: active) {
+        .container {
+            width: calc(100% - .2em);
+            min-height: calc(100% - .2em);
+            height: auto;
+            border: .1em solid var(--container-color);
+        }
+
+        .wrapper {
+            border: .1em solid var(--container-color);
+        }
+    }
+
+    @media (prefers-contrast: more) {
+
+        .container {
+            color: white !important;
+            --color: white !important;
+        }
+
+        .wrapper {
+            color: white !important;
+            --color: white !important;
+        }
+
+    }
 `

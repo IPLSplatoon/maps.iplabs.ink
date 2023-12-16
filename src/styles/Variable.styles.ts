@@ -17,21 +17,35 @@ export const variableStyles: CSSResult = css`
         --font-size: 1.5rem;
     }
 
-    ::-webkit-scrollbar {
-        width: .4em;
+    @media (prefers-contrast: more) {
+        :host {
+            --bg: #000000;
+            --green: #D9FCF3;
+            --purple: #E1D9FC;
+            --pink: #FCD9E3;
+            --yellow: #F4FCD9;
+        }
     }
-    
-    ::-webkit-scrollbar-track {
-        background: var(--container-color)
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: var(--color);
-        border-radius: .2em;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: white;
+
+    @media (forced-colors: inactive) {
+
+        ::-webkit-scrollbar {
+            width: .4em;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--container-color)
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--color);
+            border-radius: .2em;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: white;
+        }
+
     }
 
     @media only screen and (max-width: 75rem) {
@@ -61,5 +75,9 @@ export const variableStyles: CSSResult = css`
             --margin: .8em;
             --padding: .8em;
         }
+    }
+    
+    @media (forced-colors: active) {
+
     }
 `

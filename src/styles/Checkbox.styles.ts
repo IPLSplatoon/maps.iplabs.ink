@@ -54,4 +54,11 @@ export const checkboxStyles: CSSResult = css`
         opacity: .35;
         font-size: .9em;
     }
+
+    @media (forced-colors: active) {
+        .checkbox-container.selected::before {
+            forced-color-adjust: none;
+            background: white;
+        }
+    }
 `;

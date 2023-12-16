@@ -49,24 +49,28 @@ export class GenerateModal extends LitElement {
                 width: 100%;
             }
 
+            .modal-contain{
+                position: relative;
+            }
+
             .generate-wrapper {
                 background: #30333b;
-                position: absolute;
-                bottom: 0;
+                position: sticky;
+                top: 0;
                 left: 0;
                 width: calc(100% - 2 * var(--padding));
-                height: 3.2em;
-                padding: 0 var(--padding);
-                border-radius: 0 0 15px 15px;
-                border-top: .05em solid var(--container-color);
+                padding: var(--padding);
+                border-radius: 15px 15px 0 0;
+                border-bottom: .05em solid var(--container-color);
                 display: flex;
                 align-items: center;
                 gap: var(--gap);
                 z-index: 10;
             }
 
-            .modal-contain > *:last-child {
-                margin-bottom: 3.2em;
+            .generate {
+                padding: 0 var(--padding);
+                text-align: center;
             }
 
             .round-wrapper {
@@ -119,9 +123,9 @@ export class GenerateModal extends LitElement {
 
     render(): TemplateResult {
         let hasModes = false;
-        for (let i = 0; i < modeAbbreviations.length; i++){
+        for (let i = 0; i < modeAbbreviations.length; i++) {
             const mode = modeAbbreviations[i];
-            if (this.appContext?.mapPool[mode].length ?? 0 > 0){
+            if (this.appContext?.mapPool[mode].length ?? 0 > 0) {
                 hasModes = true;
                 break;
             }
@@ -175,7 +179,7 @@ export class GenerateModal extends LitElement {
     }
 
     firstUpdated() {
-        for (let i = 0; i < modeAbbreviations.length; i++){
+        for (let i = 0; i < modeAbbreviations.length; i++) {
             const mode = modeAbbreviations[i];
             if (this.appContext?.mapPool[mode].length === 0) continue;
             this.modesToGenerateWith.push(mode);
@@ -200,7 +204,7 @@ export class GenerateModal extends LitElement {
         this.error = "";
 
         const generatedRounds = generateRounds(this.appContext.rounds, this.appContext?.mapPool, this.generateMode, this.modesToGenerateWith, this.dnmRoundIndices, this.counterpickRoundIndices);
-        
+
         const event = new CustomEvent('rounds-update', {
             composed: true,
             detail: generatedRounds
@@ -225,7 +229,7 @@ export class GenerateModal extends LitElement {
 
     private getModesToGenerateWith(): TemplateResult[] {
         if (!this.appContext) return [];
-        
+
         const templates: TemplateResult[] = [];
 
         for (let i = 0; i < modeAbbreviations.length; i++) {
@@ -237,7 +241,7 @@ export class GenerateModal extends LitElement {
             </label>
         `);
         }
-        
+
         return templates;
     }
 
@@ -279,7 +283,7 @@ export class GenerateModal extends LitElement {
         }
 
         return templates;
-    }    
+    }
 
     private handleDNMRoundChange(e: Event) {
         if ((e.target as HTMLInputElement).checked) {

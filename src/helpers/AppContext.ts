@@ -5,6 +5,10 @@ import { Compressed, compress, decompress } from "compress-json";
 export function encodeAppContext(appContext: AppContext): string {
     const appContextClone = _.cloneDeep(appContext) as any;
 
+    //add a version number to the encode, so we can change the encoding algorithm in the future
+    //lets us make a new encoding algorithm without breaking old links
+    appContextClone.v = 1;
+
     const targetModeSum = Object.keys(appContextClone.mapPool).length;
     let currentModeSum = 0;
     
@@ -24,7 +28,7 @@ export function encodeAppContext(appContext: AppContext): string {
     }
 
     const compressedContext = compress(appContextClone).toString().split("|").join("$");
-    const encodedContext = encodeURIComponent(compressedContext).split("%24").join("$");
+    const encodedContext = encodeURIComponent(compressedContext).split("%24").join("$").split("%2C").join(",");
 
     return encodedContext;
 }

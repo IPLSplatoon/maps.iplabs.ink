@@ -27,7 +27,7 @@ export const variableStyles: CSSResult = css`
         }
     }
 
-    @media (forced-colors: inactive) {
+    @media (forced-colors: none) {
 
         ::-webkit-scrollbar {
             width: .4em;

@@ -1,21 +1,24 @@
 import { LitElement, html, css, TemplateResult, CSSResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { AppContext } from "../types-interfaces/Interfaces";
-import icon from "../assets/icon-small.png";
 import { variableStyles } from "../styles/Variable.styles";
 import { containerStyles } from "../styles/Container.styles";
 import { buttonStyles } from "../styles/Button.styles";
 import { gsap } from "gsap";
+import { selectStyles } from "../styles/Select.styles";
 
 @customElement('config-wrapper')
 export class MPGConfigWrapper extends LitElement {
     @property()
     appContext?: AppContext;
+    @property()
+    mapOrder?: "release" | "alphabetical";
 
     static styles: CSSResult[] = [
         variableStyles,
         containerStyles,
         buttonStyles,
+        selectStyles,
         css`
             :host {
                 display: flex;
@@ -33,7 +36,7 @@ export class MPGConfigWrapper extends LitElement {
                 height: 100%;
                 padding-left: var(--padding);
                 padding-right: var(--padding);
-                gap: var(--gap);
+                gap: var(--margin);
             }
 
             button {
@@ -54,7 +57,27 @@ export class MPGConfigWrapper extends LitElement {
                 block-size: 2em;
                 font-size: 1em;
                 background: #00000000;
-                border: 0.15em solid var(--color);
+                border: .075em solid var(--color);
+                border-radius: 15px;
+            }
+
+            select {
+                padding: .25em;
+                border: .075em solid var(--color);
+                border-radius: 15px;
+            }
+
+            @media only screen and (max-width: 47rem) { 
+                :host {
+                    height: auto;
+                }
+
+                .container.bg {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    padding: var(--padding);
+                    overflow-y: none;
+                }
             }
         `
     ];
@@ -70,6 +93,12 @@ export class MPGConfigWrapper extends LitElement {
             <label for="background-color">
                 Background Color
                 <input @change=${this.handleBackgroundColorChange} type="color" id="background-color" name="background-color" value="#FFFFFF" />
+            </label>
+            <label for="map-order">Map Order
+                <select id="map-order" name="map-order" @change=${this.handleMapOrderChange}>
+                    <option value="release">Release</option>
+                    <option value="alphabetical">Alphabetical</option>
+                </select>
             </label>
         </div>  
         `;
@@ -87,7 +116,6 @@ export class MPGConfigWrapper extends LitElement {
         } else {
             container.scrollLeft += scrollAmount;
         }
-        console.log(container.scrollLeft);
     }
 
     private handleSaveAsImage(): void {
@@ -107,6 +135,14 @@ export class MPGConfigWrapper extends LitElement {
 
     private handleBackgroundColorChange(e: Event): void {
         const event = new CustomEvent("background-color-change", {
+            composed: true,
+            detail: (e.target as HTMLInputElement).value
+        });
+        this.dispatchEvent(event);
+    }
+
+    private handleMapOrderChange(e: Event): void {
+        const event = new CustomEvent("map-order-change", {
             composed: true,
             detail: (e.target as HTMLInputElement).value
         });

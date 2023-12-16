@@ -23,6 +23,8 @@ export class MPGAppRoot extends LitElement {
         },
         rounds: []
     };
+    @property()
+    mapOrder: "release" | "alphabetical" = "release";
 
     static styles = [
         variableStyles,
@@ -114,6 +116,11 @@ export class MPGAppRoot extends LitElement {
         }
 
         @media only screen and (max-width: 47rem) { 
+            :host {
+                height: auto;
+                min-height: calc(100vh - var(--padding) * 2);
+            }
+
             .graphic-wrapper {
                 height: auto;
             }
@@ -200,6 +207,10 @@ export class MPGAppRoot extends LitElement {
         this.addEventListener("background-color-change", (e: Event) => {
             this.style.setProperty("--graphic-color-background", (e as CustomEvent).detail);
         });
+
+        this.addEventListener("map-order-change", (e: Event) => {
+            this.mapOrder = (e as CustomEvent).detail;
+        });
     }
 
     render(): TemplateResult {
@@ -266,15 +277,20 @@ export class MPGAppRoot extends LitElement {
 
         templates.push(html`<tr>${topRow}</tr>`);
 
-        for (let i = 0; i < maps.length; i++) {
+        let sortedMaps = [...maps];
+        if (this.mapOrder === "alphabetical") {
+            sortedMaps = sortedMaps.sort((a, b) => a.localeCompare(b));
+        }
+
+        for (let i = 0; i < sortedMaps.length; i++) {
             const row: TemplateResult[] = [
-                html`<td>${maps[i]}</td>`
+                html`<td>${sortedMaps[i]}</td>`
             ];
 
             let used = false;
             for (let j = 0; j < modes.length; j++) {
                 const mapPool = this.appContext.mapPool[modes[j]];
-                const map = mapPool.find(map => map === maps[i]);
+                const map = mapPool.find(map => map === sortedMaps[i]);
                 if (map) {
                     row.push(html`<td><div class="circle"></div></td>`);
                     used = true;

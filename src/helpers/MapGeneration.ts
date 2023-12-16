@@ -17,10 +17,10 @@ export function generateRounds(originalRounds: Round[], mapPool: MapPool, genera
 
     //track the number of times a map has been played for each mode
     const modeMapTracker = {} as any;
-    for (let i = 0; i < modes.length; i++) {
-        modeMapTracker[modes[i]] = {};
-        for (let j = 0; j < mapPool[modes[i]].length; j++) {
-            modeMapTracker[modes[i]][mapPool[modes[i]][j]] = 0;
+    for (let i = 0; i < modeAbbreviations.length; i++) {
+        modeMapTracker[modeAbbreviations[i]] = {};
+        for (let j = 0; j < mapPool[modeAbbreviations[i]].length; j++) {
+            modeMapTracker[modeAbbreviations[i]][mapPool[modeAbbreviations[i]][j]] = 0;
         }
     }
 

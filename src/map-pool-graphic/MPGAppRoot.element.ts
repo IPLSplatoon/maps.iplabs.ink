@@ -155,7 +155,8 @@ export class MPGAppRoot extends LitElement {
                     gsap.set(graphicContainer, {
                         position: "absolute",
                         top: "0",
-                        left: "0"
+                        left: "0",
+                        borderRadius: "0px",
                     });
 
                     this.resizeGraphic(true);
@@ -175,6 +176,7 @@ export class MPGAppRoot extends LitElement {
                             position: "",
                             top: "",
                             left: "",
+                            borderRadius: "15px",
                         });
                         
                         gsap.to(saveCover, {

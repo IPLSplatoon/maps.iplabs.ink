@@ -175,8 +175,9 @@ export class RoundEditor extends LitElement {
         if (!roundsClone) return;
         roundsClone.splice(this.roundIndex, 1);
 
-        const exitEvent = new CustomEvent("round-edit-exit", {
-            composed: true
+        const exitEvent = new CustomEvent("round-delete", {
+            composed: true,
+            detail: this.roundIndex
         });
         this.dispatchEvent(exitEvent);
         
@@ -227,7 +228,8 @@ export class RoundEditor extends LitElement {
     private editExit(): void {
         this.errorMessage = "";
         const event = new CustomEvent("round-edit-exit", {
-            composed: true
+            composed: true,
+            detail: this.roundIndex
         });
         this.dispatchEvent(event);
     }

@@ -26,5 +26,6 @@
   "scripts": {
     "dev": "vite src",
     "build": "vite build src"
-  }
+  },
+  "license": "MIT"
 }

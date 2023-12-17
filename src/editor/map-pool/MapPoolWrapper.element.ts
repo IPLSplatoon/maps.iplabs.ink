@@ -7,7 +7,7 @@ import { AppContext } from "../../types-interfaces/Interfaces";
 import "./MapPoolEditModal.element"
 import { Mode } from "../../types-interfaces/Types";
 import { maps, modeAbbreviations } from "../../helpers/MapMode";
-import { encodeAppContext } from "../../helpers/AppContext";
+import { encodeAppContext, encodeLegacyMapPool } from "../../helpers/AppContext";
 
 @customElement('map-pool-wrapper')
 export class MapPoolWrapper extends LitElement {
@@ -95,7 +95,7 @@ export class MapPoolWrapper extends LitElement {
                 <div class="wrapper">
                     <div>Map Pool Tools</div>
                     <button @click=${this.handleMapPoolGraphicClick}>Map Pool Graphic</button>
-                    <button>Use in sendou.ink</button>
+                    <button @click=${this.handleUseInSendouInkClick}>Use in sendou.ink</button>
                 </div>
             </div>
             ${this.modals}
@@ -151,5 +151,10 @@ export class MapPoolWrapper extends LitElement {
         }
 
         window.open("/map-pool-graphic/?c=" + encodeAppContext(this.appContext));
+    }
+
+    private handleUseInSendouInkClick(): void {
+        const encode = encodeLegacyMapPool(this.appContext!);
+        window.open("https://sendou.ink/maps?pool=" + encode);
     }
 }

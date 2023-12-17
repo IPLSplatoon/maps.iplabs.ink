@@ -3,7 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { variableStyles } from "../styles/Variable.styles.ts";
 import * as _ from "lodash";
 import "./header/HeaderWrapper.element.ts";
-import { decodeAppContext, encodeAppContext } from "../helpers/AppContext.ts";
+import { decodeAppContext, decodeLegacyMapPool, decodeLegacyRounds, encodeAppContext } from "../helpers/AppContext.ts";
 import "./map-pool/MapPoolWrapper.element.ts";
 import "./map-list/MapListWrapper.element.ts";
 import "./map-list-export/MapListExportWrapper.element.ts";
@@ -144,6 +144,24 @@ export class AppRoot extends LitElement {
 
         try {
             const urlParams = new URLSearchParams(window.location.search);
+
+            //check for legacy encodings
+            if (urlParams.has("rounds") || urlParams.has("mapPool")) {
+                if (!urlParams.has("3")) {
+                    window.location.replace("/v1/?" + urlParams.toString());
+                }
+
+                if (urlParams.has("pool")) {
+                    this.appContext.mapPool = decodeLegacyMapPool(urlParams.get("pool") as string, this.appContext.mapPool);
+                    console.log("legacy map pool detected", this.appContext.mapPool);
+                }
+
+                if (urlParams.has("rounds")) {
+                    this.appContext.rounds = decodeLegacyRounds(urlParams.get("rounds") as string, this.appContext.rounds);
+                    console.log("legacy rounds detected", this.appContext.rounds);
+                }
+            }
+
             if (urlParams.has("c") && urlParams.get("c") !== "") {
                 const context = urlParams.get("c");
                 if (context !== null) {
@@ -153,6 +171,7 @@ export class AppRoot extends LitElement {
             } else {
                 this.updateWindowState();
             }
+
         } catch (e) {
             console.error(e);
         }
@@ -214,7 +233,7 @@ export class AppRoot extends LitElement {
 
     private updateWindowState(): void {
         const encodedContext = encodeAppContext(this.appContext);
-        if (encodedContext === "o$%2C0"){
+        if (encodedContext === "v,a$0,n$1,o$1$2,3"){
             window.history.replaceState(null, "", "?");
         } else {
             window.history.replaceState(null, "", `?c=${encodedContext}`)

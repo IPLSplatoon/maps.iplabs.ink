@@ -8,6 +8,7 @@ export default defineConfig({
 				editor: './src/index.html',
 				viewer: './src/viewer/index.html',
 				mpg: './src/map-pool-graphic/index.html',
+				v1: "./src/v1/index.html"
 			}
 		},
 		outDir: '../dist',

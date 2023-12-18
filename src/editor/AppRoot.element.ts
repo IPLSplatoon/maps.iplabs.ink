@@ -152,12 +152,10 @@ export class AppRoot extends LitElement {
 
                 if (urlParams.has("pool")) {
                     this.appContext.mapPool = decodeLegacyMapPool(urlParams.get("pool") as string, this.appContext.mapPool);
-                    console.log("legacy map pool detected", this.appContext.mapPool);
                 }
 
                 if (urlParams.has("rounds")) {
                     this.appContext.rounds = decodeLegacyRounds(urlParams.get("rounds") as string, this.appContext.rounds);
-                    console.log("legacy rounds detected", this.appContext.rounds);
                 }
             }
 
@@ -177,17 +175,17 @@ export class AppRoot extends LitElement {
         
 
         this.addEventListener("map-pool-update", (e: Event) => {
-            console.log("map-pool-update event fired", (e as any).detail);
+            // console.log("map-pool-update event fired", (e as any).detail);
             this.updateMapPool((e as any).detail as MapPool);
         });
 
         this.addEventListener("rounds-update", (e: Event) => {
-            console.log("rounds-update event fired", (e as any).detail);
+            // console.log("rounds-update event fired", (e as any).detail);
             this.updateRounds((e as any).detail as Round[]);
         });
 
         this.addEventListener("app-context-update", (e: Event) => {
-            console.log("app-context-update event fired", (e as any).detail);
+            // console.log("app-context-update event fired", (e as any).detail);
             this.appContext = (e as any).detail as AppContext;
             this.updateWindowState();
         });

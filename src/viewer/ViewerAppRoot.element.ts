@@ -98,9 +98,7 @@ export class ViewerAppRoot extends LitElement {
         }
 
         this.addEventListener("mobile-switch", () => {
-            console.log(this.mobileView);
             this.mobileView = this.mobileView === "map-pool" ? "map-list" : "map-pool";
-            console.log(this.mobileView);
         });
     }
 

@@ -179,7 +179,6 @@ export class RoundElement extends LitElement {
 
         if (selectedMode !== "counterpick") {
             if (round.games[index] === "counterpick") {
-                console.log(this.appContext?.mapPool[selectedMode][0] as Map);
                 (round.games[index] as Game) = {
                     mode: selectedMode,
                     map: this.appContext?.mapPool[selectedMode][0] as Map

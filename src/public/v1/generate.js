@@ -432,7 +432,6 @@ function generateMaps(){
         var safetyCap = safetyCapVal;
         do {
             mapIndex = Math.floor(Math.random() * (mapDropMenu.length-1));
-            // console.log(mode, mapDropMenu.options[mapIndex].value, modeMapTracker[mode][mapDropMenu.options[mapIndex].value], modeMapTracker[mode]);
             safetyCap--;
             if (safetyCap <= 0){
                 safetyCap = safetyCapVal;

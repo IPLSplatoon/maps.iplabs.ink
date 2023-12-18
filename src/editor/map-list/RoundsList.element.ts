@@ -77,12 +77,6 @@ export class RoundsList extends LitElement {
         });
     }
 
-    update(changedProperties: Map<string | number | symbol, unknown>){
-        super.update(changedProperties);
-
-        console.log(this.editModeIndices);
-    }
-
     render(): TemplateResult {
         const roundTemplates: TemplateResult[] = [];
 

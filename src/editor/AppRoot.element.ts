@@ -9,7 +9,6 @@ import "./map-list/MapListWrapper.element.ts";
 import "./map-list-export/MapListExportWrapper.element.ts";
 import { AppContext, MapPool, Round } from "../types-interfaces/Interfaces";
 import { Mode } from "../types-interfaces/Types.ts";
-import "../assets/icon-full.png";
 import { buttonStyles } from "../styles/Button.styles.ts";
 
 @customElement('app-root')

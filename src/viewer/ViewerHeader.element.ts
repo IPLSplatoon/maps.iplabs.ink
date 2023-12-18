@@ -118,7 +118,7 @@ export class ViewerHeader extends LitElement {
     render(): TemplateResult {
         return html`
         <div class="logo-container">
-            <img src="${icon}" alt="Logo">
+            <img src="${icon}" alt="Logo" alt="maps.iplabs.ink logo">
             <div class="logo-text">
                 maps.iplabs.ink
                 <span class="logo-subtext">Viewer</span>

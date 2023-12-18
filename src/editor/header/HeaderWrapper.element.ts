@@ -101,9 +101,9 @@ export class HeaderWrapper extends LitElement {
 
     render(): TemplateResult {
         return html`
-        <img class="logo-main" src=${icon}>
+        <img class="logo-main" src=${icon} alt="maps.iplabs.ink logo">
         <div @wheel=${this.handleWheelScroll} class="container bg horizontal overflow" id="scrollTarget">
-            <img class="logo-mobile" src=${icon}>
+            <img class="logo-mobile" src=${icon} alt="maps.iplabs.ink logo">
             <div @wheel=${this.handleWheelScroll} class="logo-text">
                 maps.iplabs.ink
                 <span class="logo-subtext">Editor</span>

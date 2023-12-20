@@ -125,6 +125,7 @@ export class MPGHeaderWrapper extends LitElement {
 
     private handleEnterEditorClick(): void {
         if (!this.appContext) return;
-        window.location.assign("/?c=" + encodeAppContext(this.appContext));
+        const encodedContext = encodeAppContext(this.appContext);
+        window.location.assign("/?c=" + encodedContext.encodedContext + "&v=" + encodedContext.encodeVersion);
     }
 }

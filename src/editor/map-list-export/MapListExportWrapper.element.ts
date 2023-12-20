@@ -84,9 +84,10 @@ export class MapListExportWrapper extends LitElement {
         if (!this.appContext) return;
 
         const location = "/viewer/";
-        const params = "?c=" + encodeAppContext(this.appContext);
+        const encodedContext = encodeAppContext(this.appContext);
+        const params = "?c=" + encodedContext.encodedContext + "&v=" + encodedContext.encodeVersion;
 
-        window.open(location + params, "_blank");
+        window.open(location + params);
     }
 
     private handleDiscordMessageClicked(): void {

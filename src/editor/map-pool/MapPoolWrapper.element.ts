@@ -150,7 +150,9 @@ export class MapPoolWrapper extends LitElement {
             return;
         }
 
-        window.open("/map-pool-graphic/?c=" + encodeAppContext(this.appContext));
+        const encodedContext = encodeAppContext(this.appContext);
+
+        window.open("/map-pool-graphic/?c=" + encodedContext.encodedContext + "&v=" + encodedContext.encodeVersion);
     }
 
     private handleUseInSendouInkClick(): void {

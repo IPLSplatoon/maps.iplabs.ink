@@ -60,23 +60,27 @@ export function decodeAppContext(encodedContext: string): AppContext {
     const decodedContext = decodeURIComponent(encodedContext);
     const decompressed = JSON.parse(JSONCrush.uncrush(decodedContext));
 
-    //for each map pool in each mode, replace the map index with the map name if it exists in the maps array
-    Object.keys(decompressed.mapPool).forEach((key) => {
-        decompressed.mapPool[key] = decompressed.mapPool[key].map((map: Map) => {
-            return typeof map === "number" ? maps[map] : map;
+    if (decompressed.mapPool !== undefined) {
+        //for each map pool in each mode, replace the map index with the map name if it exists in the maps array
+        Object.keys(decompressed.mapPool).forEach((key) => {
+            decompressed.mapPool[key] = decompressed.mapPool[key].map((map: Map) => {
+                return typeof map === "number" ? maps[map] : map;
+            });
         });
-    });
+    }
 
-    //for each round, replace the map index with the map name if it exists in the maps array
-    decompressed.rounds.forEach((round: Round) => {
-        round.games = round.games.map((game: Game | Counterpick) => {
-            if (game === "counterpick") {
-                return game;
-            } else {
-                return { map: maps[game.map as any], mode: game.mode };
-            }
-        }) as (Game | Counterpick)[];
-    });
+    if (decompressed.rounds !== undefined) {
+        //for each round, replace the map index with the map name if it exists in the maps array
+        decompressed.rounds.forEach((round: Round) => {
+            round.games = round.games.map((game: Game | Counterpick) => {
+                if (game === "counterpick") {
+                    return game;
+                } else {
+                    return { map: maps[game.map as any], mode: game.mode };
+                }
+            }) as (Game | Counterpick)[];
+        });
+    }
 
     const appContext: AppContext = {
         mapPool: {

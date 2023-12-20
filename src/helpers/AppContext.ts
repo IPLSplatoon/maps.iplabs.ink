@@ -1,8 +1,8 @@
 import * as _ from "lodash";
 import { AppContext, Game, MapPool, Round } from "../types-interfaces/Interfaces";
-import { Compressed, compress, decompress } from "compress-json";
 import { maps, modeAbbreviations } from "./MapMode";
 import { Counterpick, Map, Mode } from "../types-interfaces/Types";
+import JSONCrush from "jsoncrush";
 
 export function encodeAppContext(appContext: AppContext): string {
     const appContextClone = _.cloneDeep(appContext) as any;
@@ -21,6 +21,28 @@ export function encodeAppContext(appContext: AppContext): string {
         }
     });
 
+    //for each map pool in each mode, replace the map name with an index if it exists in the maps array
+    Object.keys(appContextClone.mapPool).forEach((key) => {
+        appContextClone.mapPool[key] = appContextClone.mapPool[key].map((map: Map) => {
+            const index = maps.indexOf(map);
+            return index !== -1 ? index : map;
+        });
+    });
+
+    //for each round, replace the map name with an index if it exists in the maps array
+    appContextClone.rounds.forEach((round: Round) => {
+        round.games = round.games.map((game: Game | Counterpick) => {
+            if (game === "counterpick") {
+                return game;
+            } else {
+                const index = maps.indexOf(game.map);
+                return index !== -1 ? { map: index, mode: game.mode } : game;
+            }
+        }) as (Game | Counterpick)[];
+    });
+
+    console.log("compressing", appContextClone);
+
     if (currentModeSum === targetModeSum) {
         delete appContextClone.mapPool;
     }
@@ -29,21 +51,34 @@ export function encodeAppContext(appContext: AppContext): string {
         delete appContextClone.rounds;
     }
 
-    const compressedContext = compress(appContextClone).toString().split("|").join("$");
-    const encodedContext = encodeURIComponent(compressedContext).split("%24").join("$").split("%2C").join(",");
+    const compressedContext = JSONCrush.crush(JSON.stringify(appContextClone));
+    const encodedContext = encodeURIComponent(compressedContext);
 
     return encodedContext;
 }
 
 export function decodeAppContext(encodedContext: string): AppContext {
-    const decodedContext = decodeURIComponent(encodedContext).split("$").join("|").split(",");
-    const compressedContext: Compressed = [
-        [
-            ...decodedContext.slice(0, decodedContext.length - 1)
-        ],
-        decodedContext[decodedContext.length - 1]
-    ]
-    const decompressed = decompress(compressedContext);
+    const decodedContext = decodeURIComponent(encodedContext);
+    const decompressed = JSON.parse(JSONCrush.uncrush(decodedContext));
+
+    //for each map pool in each mode, replace the map index with the map name if it exists in the maps array
+    Object.keys(decompressed.mapPool).forEach((key) => {
+        decompressed.mapPool[key] = decompressed.mapPool[key].map((map: Map) => {
+            return typeof map === "number" ? maps[map] : map;
+        });
+    });
+
+    //for each round, replace the map index with the map name if it exists in the maps array
+    decompressed.rounds.forEach((round: Round) => {
+        round.games = round.games.map((game: Game | Counterpick) => {
+            if (game === "counterpick") {
+                return game;
+            } else {
+                return { map: maps[game.map as any], mode: game.mode };
+            }
+        }) as (Game | Counterpick)[];
+    });
+
     const appContext: AppContext = {
         mapPool: {
             tw: decompressed.mapPool?.tw ?? [],
@@ -54,6 +89,8 @@ export function decodeAppContext(encodedContext: string): AppContext {
         },
         rounds: decompressed.rounds ?? []
     };
+
+    console.log("decompressed", appContext);
 
     return appContext;
 }

@@ -15,9 +15,9 @@
   "homepage": "https://github.com/IPLSplatoon/maps.iplabs.ink#readme",
   "dependencies": {
     "@types/lodash": "^4.14.202",
-    "compress-json": "^2.1.2",
     "gsap": "^3.12.3",
     "html2canvas": "^1.4.1",
+    "jsoncrush": "^1.1.8",
     "lit": "^3.1.0",
     "lodash": "^4.17.21",
     "typescript": "^5.3.3",

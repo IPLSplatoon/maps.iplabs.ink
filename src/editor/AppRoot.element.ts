@@ -230,7 +230,7 @@ export class AppRoot extends LitElement {
 
     private updateWindowState(): void {
         const encodedContext = encodeAppContext(this.appContext);
-        if (encodedContext === "v,a$0,n$1,o$1$2,3"){
+        if (encodedContext === "('v!1)_"){
             window.history.replaceState(null, "", "?");
         } else {
             window.history.replaceState(null, "", `?c=${encodedContext}`)

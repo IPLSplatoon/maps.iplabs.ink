@@ -4,12 +4,8 @@ import { maps, modeAbbreviations } from "./MapMode";
 import { Counterpick, Map, Mode } from "../types-interfaces/Types";
 import JSONCrush from "jsoncrush";
 
-export function encodeAppContext(appContext: AppContext): string {
+export function encodeAppContext(appContext: AppContext): { encodedContext: string, encodeVersion: number } {
     const appContextClone = _.cloneDeep(appContext) as any;
-
-    //add a version number to the encode, so we can change the encoding algorithm in the future
-    //lets us make a new encoding algorithm without breaking old links
-    appContextClone.v = 1;
 
     const targetModeSum = Object.keys(appContextClone.mapPool).length;
     let currentModeSum = 0;
@@ -54,7 +50,10 @@ export function encodeAppContext(appContext: AppContext): string {
     const compressedContext = JSONCrush.crush(JSON.stringify(appContextClone));
     const encodedContext = encodeURIComponent(compressedContext);
 
-    return encodedContext;
+    return {
+        encodedContext: encodedContext,
+        encodeVersion: 1
+    }
 }
 
 export function decodeAppContext(encodedContext: string): AppContext {

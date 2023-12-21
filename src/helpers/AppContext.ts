@@ -37,8 +37,6 @@ export function encodeAppContext(appContext: AppContext): { encodedContext: stri
         }) as (Game | Counterpick)[];
     });
 
-    console.log("compressing", appContextClone);
-
     if (currentModeSum === targetModeSum) {
         delete appContextClone.mapPool;
     }
@@ -92,8 +90,6 @@ export function decodeAppContext(encodedContext: string): AppContext {
         },
         rounds: decompressed.rounds ?? []
     };
-
-    console.log("decompressed", appContext);
 
     return appContext;
 }

@@ -115,7 +115,7 @@ export class MPGAppRoot extends LitElement {
             z-index: 10;
         }
 
-        @media only screen and (max-width: 47rem) { 
+        @media only screen and (max-width: 47rem){ 
             :host {
                 height: auto;
                 min-height: calc(100vh - var(--padding) * 2);
@@ -124,6 +124,13 @@ export class MPGAppRoot extends LitElement {
             .graphic-wrapper {
                 height: auto;
                 min-height: min(100vw, 60vh);
+            }
+        }
+
+        @media only screen and (max-height: 55rem){ 
+            :host {
+                height: auto;
+                min-height: calc(100vh - var(--padding) * 2);
             }
         }
         `

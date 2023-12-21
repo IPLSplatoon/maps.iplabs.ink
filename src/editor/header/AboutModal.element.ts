@@ -7,6 +7,7 @@ import { modalStyles } from "../../styles/Modal.styles";
 import { getModalCloseTimeline, getModalOpenTimeline } from "../../helpers/ModalAnimations";
 import logo from "../../assets/icon.png"
 import back from "../../assets/back-yellow.svg"
+import iplLogo from "../../assets/ipl-logo.png"
 
 @customElement('about-modal')
 export class AboutModal extends LitElement {
@@ -53,6 +54,11 @@ export class AboutModal extends LitElement {
             a:visited {
                 color: var(--color);
             }
+
+            .credits img {
+                width: 100%;
+                max-height: 7em;
+            }
         `
     ];
 
@@ -69,14 +75,15 @@ export class AboutModal extends LitElement {
                             <img src=${logo}>
                             <div>maps.iplabs.ink</div>
                         </div>
-                        <div class="wrapper" style="font-size: 1.2em">
+                        <div class="wrapper" style="font-size: 1.1em">
                             <div>Splatoon tournament map list creator built for the community, by the community. Features map pool creation, round creation, map list generation algorithms, map list stats, map pool graphics creation, and easy sharing of map lists.</div>
                             <div>This project is open source. Submit bug reports or feature requests at the project’s <a target="_blank" href="https://github.com/IPLSplatoon/maps.iplabs.ink">Github page</a>.</div>
-                            <div>
-                                Credits:<br>
-                                Created and maintained by <a target="_blank" href="https://jpg.contact/">.jpg</a><br>
-                                Hosted and supported by <a target="_blank" href="https://iplabs.ink/">Inkling Performance Labs</a>
-                            </div>
+                        </div>
+                        <div class="wrapper credits">
+                            <div style="font-size: 1.2em; font-weight: 600">Credits:</div>
+                            <div>Created and maintained by: <a target="_blank" href="https://jpg.contact/">.jpg</a></div>
+                            <div>Hosted and supported by:</div>
+                            <div><a target="_blank" href="https://iplabs.ink/"><img src=${iplLogo} alt="Inkling Performance Labs"></a></div>
                         </div>
                         <div class="wrapper">
                             Last updated on ${BUILD_DATE.date}.

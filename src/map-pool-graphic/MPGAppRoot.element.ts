@@ -31,8 +31,10 @@ export class MPGAppRoot extends LitElement {
         css`
         :host {
             display: flex;
-            width: calc(100vw - var(--padding)  * 2);
-            height: calc(100vh - var(--padding) * 2);
+            max-width: calc(100vw - var(--padding)  * 2);
+            min-height: calc(100vh - var(--padding) * 2);
+            width: auto;
+            height: 100%;
             padding: var(--padding);
             background: var(--bg);
             --color: white;

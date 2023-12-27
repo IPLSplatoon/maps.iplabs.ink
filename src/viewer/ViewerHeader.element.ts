@@ -93,11 +93,9 @@ export class ViewerHeader extends LitElement {
                 }
 
                 .logo-text {
-                    font-size: 1.3em;
+                    font-size: 1.25em;
                     white-space: normal;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
+                    display: grid;
                 }
                 
                 img {

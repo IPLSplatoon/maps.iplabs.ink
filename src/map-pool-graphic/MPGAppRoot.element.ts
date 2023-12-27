@@ -62,6 +62,7 @@ export class MPGAppRoot extends LitElement {
 
         .graphic-wrapper {
             width: 100%;
+            min-height: 70vh;
             height: 100%;
             display: flex;
             align-items: center;

@@ -91,7 +91,7 @@ export class HeaderWrapper extends LitElement {
                 }
 
                 .container.bg {
-                    padding: var(--padding);
+                    padding: calc(var(--padding) / 2) var(--padding);
                 }
                 
                 button {
@@ -104,6 +104,10 @@ export class HeaderWrapper extends LitElement {
                 
                 .logo-main {
                     display: none;
+                }
+
+                .logo-text {
+                    display: grid;
                 }
 
                 .logo-mobile {

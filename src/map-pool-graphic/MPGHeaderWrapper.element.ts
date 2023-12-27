@@ -82,14 +82,43 @@ export class MPGHeaderWrapper extends LitElement {
             }
 
             @media only screen and (max-width: 34rem) {
+                :host {
+                    height: auto;
+                }
+
+                .container.horizontal {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+
+                .container.bg {
+                    padding: calc(var(--padding) / 2) var(--padding);
+                }
+                
+                button {
+                    font-size: .85em;
+                    border: none;
+                    text-decoration: underline;
+                    padding: 0 var(--gap);
+                    min-height: 0;
+                }
+                
                 .logo-main {
                     display: none;
                 }
 
                 .logo-mobile {
                     display: block;
+                    height: 2em;
                 }
-            }
+
+                .logo-text {
+                    display: grid;
+                }
+
+                .button-container {
+                    justify-content: flex-start;
+                }
         `
     ];
 

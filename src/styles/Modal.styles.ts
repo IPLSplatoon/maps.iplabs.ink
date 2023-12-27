@@ -68,6 +68,36 @@ export const modalStyles: CSSResult = css`
         height: 100%;
     }
 
+    @media only screen and (max-width: 34rem) {
+        .modal {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+        }
+
+        .modal-body {
+            gap: 0;
+        }
+
+        .modal-header {
+            padding: var(--padding);
+        }
+
+        .back {
+            width: 4em;
+            border-radius: 2em;
+        }
+
+        .title {
+            margin-right: 2em;
+            text-wrap: pretty;
+        }
+
+        .modal-contain.container {
+            border-radius: 15px 15px 0 0;
+        }
+    }
+
     @media (forced-colors: active) {
         .back {
             filter: saturate(0) brightness(2);

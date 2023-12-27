@@ -145,12 +145,13 @@ export class AppRoot extends LitElement {
             const urlParams = new URLSearchParams(window.location.search);
 
             //check for legacy encodings
-            if (urlParams.has("rounds") || urlParams.has("mapPool")) {
+            if (urlParams.has("rounds") || urlParams.has("pool")) {
                 if (!urlParams.has("3")) {
                     window.location.replace("/v1/?" + urlParams.toString());
                 }
 
                 if (urlParams.has("pool")) {
+                    console.log("legacy map pool detected");
                     this.appContext.mapPool = decodeLegacyMapPool(urlParams.get("pool") as string, this.appContext.mapPool);
                 }
 

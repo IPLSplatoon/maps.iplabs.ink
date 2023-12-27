@@ -92,6 +92,7 @@ export class AppRoot extends LitElement {
                 gap: var(--margin);
                 width: 100%;
                 font-size: .8em;
+                padding: calc(var(--padding) / 2) 0;
             }
 
             .mobile-nav button {
@@ -151,7 +152,6 @@ export class AppRoot extends LitElement {
                 }
 
                 if (urlParams.has("pool")) {
-                    console.log("legacy map pool detected");
                     this.appContext.mapPool = decodeLegacyMapPool(urlParams.get("pool") as string, this.appContext.mapPool);
                 }
 

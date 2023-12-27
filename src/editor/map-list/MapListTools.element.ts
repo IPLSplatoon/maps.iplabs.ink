@@ -48,6 +48,22 @@ export class MapListTools extends LitElement {
                     border: .2em solid var(--container-color);
                 }
             }
+
+            @media only screen and (max-width: 29rem) {
+                :host {
+                    height: auto;
+                    border-bottom: calc(var(--margin) / 3) solid var(--bg);
+                }
+
+                .wrapper {
+                    flex-wrap: wrap;
+                    padding: var(--padding);
+                }
+
+                .label {
+                    width: 100%;
+                }
+            }
         `
     ];
 
@@ -63,7 +79,7 @@ export class MapListTools extends LitElement {
     render(): TemplateResult {
         return html`
             <div id="scrollTarget" class="wrapper horizontal overflow" @wheel=${this.handleWheelScroll}>
-                <div>Map List Tools</div>
+                <div class="label">Map List Tools</div>
                 <button class="generate" @click=${this.handleGenerateClick}>Generate</button>
                 <button @click=${this.handleStatsClick}>Stats</button>
                 <button @click=${this.handleResetClick}>Reset</button>

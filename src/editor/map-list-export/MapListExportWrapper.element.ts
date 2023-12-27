@@ -40,6 +40,21 @@ export class MapListExportWrapper extends LitElement {
                 gap: var(--gap);
                 white-space: nowrap;
             }
+
+            @media only screen and (max-width: 29rem) {
+                :host {
+                    height: auto;
+                }
+
+                .container.bg {
+                    flex-wrap: wrap;
+                    padding: var(--padding);
+                }
+
+                .label {
+                    width: 100%;
+                }
+            }
         `
     ];
     
@@ -57,7 +72,7 @@ export class MapListExportWrapper extends LitElement {
         }
         return html`
             <div id="scrollTarget" class="container bg horizontal overflow" @wheel=${this.handleWheelScroll}>
-                <div @wheel=${this.handleWheelScroll}>Export Map List</div>
+                <div class="label" @wheel=${this.handleWheelScroll}>Export Map List</div>
                 <button @click=${this.handleShareLinkClicked}>Share Link To View</button>
                 <button @click=${this.handleDiscordMessageClicked}>Discord Message</button>
                 <button @click=${this.handleIPLOverlayJSONClicked}>IPL Overlay JSON</button>

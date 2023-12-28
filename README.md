@@ -3,7 +3,7 @@
 ![maps.iplabs.ink logo](repo-assets/logo-full.png)
 
 ## About
-[maps.iplabs.ink](https://maps.iplabs.ink/) is a powerful splatoon tournament map generator. The goal of this app is to help competitive Splatoon community members create quality map lists while making the process easier.
+[maps.iplabs.ink](https://maps.iplabs.ink/) is a powerful splatoon tournament map generator. The goal of this app is to help competitive Splatoon community members create quality map lists while making the process easier. Check out the [tutorial](https://github.com/IPLSplatoon/maps.iplabs.ink/wiki/Tutorial) to learn how to use it.
 
 ### Features
  - Creation of map pools to denote what maps can appear in each mode.
@@ -22,14 +22,21 @@
 ![maps.iplabs.ink editor screenshot](repo-assets/editor.png)
 **Viewer:**
 ![maps.iplabs.ink viewer screenshot](repo-assets/viewer.png)
-**Map List Graphic:**
+**Map Pool Graphic:**
 ![maps.iplabs.ink map pool generator screenshot](repo-assets/mpg.png)
 
 ## Development
-This app is made with [Lit](https://lit.dev/), [Typescript](https://www.typescriptlang.org/), and [Vite](https://vitejs.dev/)
+This app is made with [Node.js](https://nodejs.org/en), [Lit](https://lit.dev/), [Typescript](https://www.typescriptlang.org/), and [Vite](https://vitejs.dev/)
 
-Install dependencies: `npm i`
+### Installation:
 
-Enter dev mode: `npm run dev`
+1. Install Node.js; this app was built using v18.13.0.
+2. Clone this repo using the following terminal command `git clone https://github.com/IPLSplatoon/maps.iplabs.ink.git`
+3. In the same terminal, switch to the project's directory `cd maps.iplabs.ink`
+4. Install project dependencies `npm i`
 
-Build for production: `npm run build`
+Edit source code in the `src` directory. Code from there can be built into the `dist` directory (created when you build)
+
+Build the app using `npm run build`
+
+Enter dev mode using `npm run dev`

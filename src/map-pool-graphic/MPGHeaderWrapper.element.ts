@@ -92,7 +92,7 @@ export class MPGHeaderWrapper extends LitElement {
                 }
 
                 .container.bg {
-                    padding: calc(var(--padding) / 2) var(--padding);
+                    padding: calc(var(--padding) / 2) var(--padding)
                 }
                 
                 button {
@@ -118,7 +118,10 @@ export class MPGHeaderWrapper extends LitElement {
 
                 .button-container {
                     justify-content: flex-start;
+                    min-height: 0;
+                    height: auto;
                 }
+            }
         `
     ];
 

@@ -80,15 +80,17 @@ export class GenerateModal extends LitElement {
                 align-items: center;
                 flex-wrap: wrap;
                 gap: var(--gap);
+                border-bottom: .05em solid var(--container-color);
             }
 
             .round-wrapper > .name {
                 min-width: 6em;
+                margin-right: auto;
             }
 
             .round-wrapper > .checkbox-container {
                 width: auto;
-                font-size: .8em;
+                font-size: .9em;
             }
 
             .header {
@@ -275,7 +277,7 @@ export class GenerateModal extends LitElement {
                     <label class="checkbox-container" for=${"dnm-round" + i}>Do not modify
                         <input type="checkbox" id=${"dnm-round" + i} data-round=${i} @click=${this.handleDNMRoundChange}>
                     </label>
-                    <label class="checkbox-container" for=${"counterpick-round" + i}>Counterpicking
+                    <label class="checkbox-container" for=${"counterpick-round" + i}>Counterpick
                         <input type="checkbox" id=${"counterpick-round" + i} data-round=${i} @click=${this.handleCounterpickRoundChange}>
                     </label>
                 </div>

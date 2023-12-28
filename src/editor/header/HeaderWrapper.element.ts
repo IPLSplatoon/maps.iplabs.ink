@@ -142,6 +142,7 @@ export class HeaderWrapper extends LitElement {
                 <button @click=${this.handleSaveClick}>Save</button>
                 <button @click=${this.handleLoadClick}>Load</button>
                 <button @click=${this.handleAboutClick}>About</button>
+                <button @click=${this.handleTutorialClick}>Tutorial</button>
             </div>  
         </div>
         ${this.modals}
@@ -203,5 +204,9 @@ export class HeaderWrapper extends LitElement {
     private handleAboutClick(): void {
         const modal = html`<about-modal></about-modal>`;
         this.modals = [modal];
+    }
+
+    private handleTutorialClick(): void {
+        window.open("https://github.com/IPLSplatoon/maps.iplabs.ink/wiki/Tutorial");
     }
 }

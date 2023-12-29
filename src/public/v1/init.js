@@ -891,7 +891,6 @@ function decodeMapPool(pools){
             }
         }
 
-        console.log(decodedHex, offset);
         adjustSelectedCount(thisPool[0]);
     }
 }

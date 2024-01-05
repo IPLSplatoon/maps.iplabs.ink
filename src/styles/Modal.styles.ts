@@ -7,8 +7,8 @@ export const modalStyles: CSSResult = css`
         position: fixed;
         top: 0; 
         left: 0;
-        width: calc(100vw - var(--padding) * 2);
-        height: calc(100vh - var(--padding) * 2);
+        width: calc(100dvw - var(--padding) * 2);
+        height: calc(100dvh - var(--padding) * 2);
         padding: var(--padding);
         background: var(--bg);
         color: var(--color);
@@ -70,8 +70,8 @@ export const modalStyles: CSSResult = css`
 
     @media only screen and (max-width: 34rem) {
         .modal {
-            width: 100vw;
-            height: 100vh;
+            width: 100dvw;
+            height: 100dvh;
             padding: 0;
         }
 

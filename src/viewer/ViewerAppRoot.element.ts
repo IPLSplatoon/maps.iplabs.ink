@@ -28,8 +28,8 @@ export class ViewerAppRoot extends LitElement {
         css`
         :host {
             display: flex;
-            width: calc(100vw - var(--padding)  * 2);
-            height: calc(100vh - var(--padding) * 2);
+            width: calc(100dvw - var(--padding)  * 2);
+            height: calc(100dvh - var(--padding) * 2);
             padding: var(--padding);
             background: var(--bg);
             --color: white;

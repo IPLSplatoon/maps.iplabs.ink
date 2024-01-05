@@ -31,8 +31,8 @@ export class MPGAppRoot extends LitElement {
         css`
         :host {
             display: flex;
-            max-width: calc(100vw - var(--padding)  * 2);
-            min-height: calc(100vh - var(--padding) * 2);
+            max-width: calc(100dvw - var(--padding)  * 2);
+            min-height: calc(100dvh - var(--padding) * 2);
             width: auto;
             height: 100%;
             padding: var(--padding);
@@ -62,7 +62,7 @@ export class MPGAppRoot extends LitElement {
 
         .graphic-wrapper {
             width: 100%;
-            min-height: 75vh;
+            min-height: 75dvh;
             height: 100%;
             display: flex;
             align-items: center;
@@ -107,8 +107,8 @@ export class MPGAppRoot extends LitElement {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100dvw;
+            height: 100dvh;
             align-items: center;
             justify-content: center;
             background: var(--bg);
@@ -121,19 +121,19 @@ export class MPGAppRoot extends LitElement {
         @media only screen and (max-width: 47rem){ 
             :host {
                 height: auto;
-                min-height: calc(100vh - var(--padding) * 2);
+                min-height: calc(100dvh - var(--padding) * 2);
             }
 
             .graphic-wrapper {
                 height: auto;
-                min-height: min(100vw, 60vh);
+                min-height: min(100dvw, 60dvh);
             }
         }
 
         @media only screen and (max-height: 55rem){ 
             :host {
                 height: auto;
-                min-height: calc(100vh - var(--padding) * 2);
+                min-height: calc(100dvh - var(--padding) * 2);
             }
         }
         `

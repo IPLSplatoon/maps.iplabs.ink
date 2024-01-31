@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { AppContext } from "../types-interfaces/Interfaces";
 import { variableStyles } from "../styles/Variable.styles";
 import { decodeAppContext } from "../helpers/AppContext";
@@ -25,6 +25,12 @@ export class MPGAppRoot extends LitElement {
     };
     @property()
     mapOrder: "release" | "alphabetical" = "release";
+    @state()
+    contentColor: string = "#000000";
+    @state()
+    backgroundColor: string = "#FFFFFF";
+    @state()
+    showContrastWarning: boolean = false;
 
     static styles = [
         variableStyles,
@@ -42,10 +48,6 @@ export class MPGAppRoot extends LitElement {
             font-family: var(--serif);
             font-weight: 500;
             font-size: var(--font-size);
-            
-            --graphic-color-content: #000000; 
-            --graphic-color-box: #00000010;
-            --graphic-color-background: #FFFFFF;
         }
 
         .primary-container {
@@ -116,6 +118,17 @@ export class MPGAppRoot extends LitElement {
             font-size: 2em;
             font-weight: 700;
             z-index: 10;
+        }
+
+        .contrast-warn {
+            width: calc(100% - var(--padding) * 2);
+            background: rgba(248, 216, 227, 0.15);
+            color: var(--pink);
+            min-height: 3.2em;
+            border-radius: 15px;
+            padding: calc(var(--padding) / 2) var(--padding);
+            align-items: center;
+            gap: .5ch;
         }
 
         @media only screen and (max-width: 47rem){ 
@@ -211,12 +224,13 @@ export class MPGAppRoot extends LitElement {
         });
 
         this.addEventListener("content-color-change", (e: Event) => {
-            this.style.setProperty("--graphic-color-content", (e as CustomEvent).detail);
-            this.style.setProperty("--graphic-color-box", `${(e as CustomEvent).detail}10`);
+            this.contentColor = (e as CustomEvent).detail;
+            this.showContrastWarning = this.getColorContrast(this.contentColor, this.backgroundColor) < .6
         });
 
         this.addEventListener("background-color-change", (e: Event) => {
-            this.style.setProperty("--graphic-color-background", (e as CustomEvent).detail);
+            this.backgroundColor = (e as CustomEvent).detail;
+            this.showContrastWarning = this.getColorContrast(this.contentColor, this.backgroundColor) < .6
         });
 
         this.addEventListener("map-order-change", (e: Event) => {
@@ -227,12 +241,21 @@ export class MPGAppRoot extends LitElement {
     render(): TemplateResult {
         return html`
         <div class="save-cover">Saving image...</div>
-        <div class="primary-container">
+        <div class="primary-container" style="
+            --graphic-color-content: ${this.contentColor};
+            --graphic-color-box: #${this.contentColor}10;
+            --graphic-color-background: ${this.backgroundColor};
+            
+        ">
             <header-wrapper .appContext=${this.appContext}></header-wrapper>
             <div class="graphic-wrapper">
                 <div id="graphic-html">
                     ${this.getMapPoolGraphicTemplate()}
                 </div>
+            </div>
+            <div class="contrast-warn container" style="display: ${this.showContrastWarning ? "flex" : "none"}">
+                <strong>Warning:&nbsp;</strong>
+                Some people might struggle to read with certain color combinations. Consider selecting colors that contrast more for better visibility.
             </div>
             <config-wrapper .appContext=${this.appContext}></config-wrapper>
         </div>
@@ -318,5 +341,22 @@ export class MPGAppRoot extends LitElement {
         this.resizeGraphic();
 
         return html`<table>${templates}</table>`;
+    }
+
+    private getColorContrast(foreground: string, background: string): number {
+        //compare two hex colors and return true if contrast is 7:1
+        const getLuminance = (hex: string) => {
+            hex = hex.replace("#", "");
+            const rgb = parseInt(hex, 16);
+            const r = (rgb >> 16) & 0xff;
+            const g = (rgb >> 8) & 0xff;
+            const b = (rgb >> 0) & 0xff;
+            const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            return luminance / 255;
+        }
+
+        const l1 = getLuminance(foreground);
+        const l2 = getLuminance(background);
+        return Math.abs(l1 - l2);
     }
 }

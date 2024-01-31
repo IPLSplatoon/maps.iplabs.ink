@@ -243,7 +243,7 @@ export class MPGAppRoot extends LitElement {
         <div class="save-cover">Saving image...</div>
         <div class="primary-container" style="
             --graphic-color-content: ${this.contentColor};
-            --graphic-color-box: #${this.contentColor}10;
+            --graphic-color-box: ${this.contentColor}10;
             --graphic-color-background: ${this.backgroundColor};
             
         ">

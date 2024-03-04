@@ -39,7 +39,8 @@ export const maps = [
     "Crableg Capital",
     "Shipshape Cargo Co.",
     "Bluefin Depot",
-    "Robo ROM-en"
+    "Robo ROM-en",
+    "Marlin Airport"
 ] as const;
 
 export function getPlayStyleString(playStyle: "bestOf" | "playAll", numGames: number): string {

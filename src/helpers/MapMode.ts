@@ -41,7 +41,8 @@ export const maps = [
     "Bluefin Depot",
     "Robo ROM-en",
     "Marlin Airport",
-    "Lemuria Hub"
+    "Lemuria Hub",
+    "Urchin Underpass"
 ] as const;
 
 export function getPlayStyleString(playStyle: "bestOf" | "playAll", numGames: number): string {
